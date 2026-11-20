@@ -1,0 +1,5 @@
+import type {Metadata} from 'next';
+import {SiteShell} from '@/components/site-shell';
+import {Catalog} from '@/components/catalog';
+export const metadata:Metadata={title:'Templates | FORMA',robots:{index:false,follow:true}};
+export default async function Page({searchParams}:{searchParams:Promise<import('@/lib/api/query').RawQuery>}){const query=await searchParams;return <SiteShell locale="uk"><Catalog locale="uk" query={query} search={false}/></SiteShell>}

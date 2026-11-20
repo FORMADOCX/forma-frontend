@@ -1,0 +1,1 @@
+import {SiteShell} from '@/components/site-shell';export default function Loading(){return <SiteShell locale="uk"><div className="container page-content" role="status">Завантаження…</div></SiteShell>}

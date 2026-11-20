@@ -1,0 +1,5 @@
+{
+ "slug":"about","locale":"en","title":"About","summary":"About this library","body":"## What we do\nDocument templates.",
+ "available_translations":["en","uk"],"show_in_navigation":false,"show_in_footer":true,
+ "seo":{"title":"About FORMA","description":"Document library","canonical":null,"og_title":"About FORMA","og_description":"Document library","og_image":null}
+}

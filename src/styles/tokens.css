@@ -1,0 +1,16 @@
+/* FORMA / Premium Editorial Document Library */
+:root {
+ color-scheme:light;
+ --font:Arial,Helvetica,sans-serif;
+ --font-editorial:Georgia,'Times New Roman',serif;
+ --paper:#f9faf9;
+ --soft:#f0f2f1;
+ --ink:#182021;
+ --muted:#59616a;
+ --border:#dfe3e5;
+ --accent:#365c45;
+ --accent-hover:#284835;
+ --surface:#ffffff;
+ --radius:10px;
+ --container:1500px;
+}

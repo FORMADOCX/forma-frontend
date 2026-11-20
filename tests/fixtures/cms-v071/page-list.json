@@ -1,0 +1,9 @@
+{
+  "count": 2,
+  "next": null,
+  "previous": null,
+  "results": [
+    {"slug":"about","locale":"en","title":"About","summary":"About this library","available_translations":["en","uk"]},
+    {"slug":"privacy","locale":"en","title":"Privacy Policy","summary":"Privacy information","available_translations":["en"]}
+  ]
+}

@@ -1,0 +1,343 @@
+openapi: 3.0.3
+info:
+  title: FORMA Backend API
+  version: 0.2.0
+  description: MANUALLY AUTHORED provisional contract. Regenerate with manage.py spectacular
+    and validate in Django runtime.
+paths:
+  /api/v1/health/:
+    get:
+      summary: Readiness status
+      responses:
+        '200':
+          description: Ready
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+        '503':
+          description: Database unavailable
+  /api/v1/categories/:
+    get:
+      summary: Published categories
+      parameters:
+      - &id001
+        name: lang
+        in: query
+        required: false
+        description: en or uk (default en; fallback EN)
+        schema:
+          type: string
+      - &id002
+        name: page
+        in: query
+        required: false
+        description: Page index, 1-based
+        schema:
+          type: integer
+      - &id003
+        name: page_size
+        in: query
+        required: false
+        description: Page size 1–100, default 20
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCategories'
+        '400':
+          description: Invalid query parameters
+  /api/v1/categories/{slug}/:
+    get:
+      summary: Published category
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - *id001
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '400':
+          description: Invalid query parameters
+        '404':
+          description: Resource not found or unpublished
+  /api/v1/templates/:
+    get:
+      summary: Published templates
+      parameters:
+      - *id001
+      - name: category
+        in: query
+        required: false
+        description: Visible category slug, includes descendants
+        schema:
+          type: string
+      - name: q
+        in: query
+        required: false
+        description: Text search (max 120)
+        schema:
+          type: string
+      - name: sort
+        in: query
+        required: false
+        description: newest, oldest, title or -title
+        schema:
+          type: string
+      - *id002
+      - *id003
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTemplates'
+        '400':
+          description: Invalid query parameters
+  /api/v1/templates/{slug}/quick-preview/:
+    get:
+      summary: Limited template Quick Preview
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - *id001
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateQuickPreview'
+        '400':
+          description: Invalid query parameters
+        '404':
+          description: Resource not found or unpublished
+  /api/v1/templates/{slug}/:
+    get:
+      summary: Published template detail
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - *id001
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateDetail'
+        '400':
+          description: Invalid query parameters
+        '404':
+          description: Resource not found or unpublished
+components:
+  schemas:
+    Health:
+      type: object
+      required:
+      - status
+      - database
+      properties:
+        status:
+          type: string
+          enum:
+          - ok
+          - unavailable
+        database:
+          type: string
+          enum:
+          - ok
+          - unavailable
+    Seo:
+      type: object
+      nullable: true
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        canonical:
+          type: string
+        og_title:
+          type: string
+        og_description:
+          type: string
+        index:
+          type: boolean
+    CategorySummary:
+      type: object
+      required:
+      - slug
+      - name
+      properties:
+        slug:
+          type: string
+        name:
+          type: string
+    Category:
+      type: object
+      required:
+      - id
+      - slug
+      - name
+      - description
+      - language
+      - parent_slug
+      - seo
+      properties:
+        id:
+          type: string
+          format: uuid
+        slug:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        language:
+          type: string
+        parent_slug:
+          type: string
+          nullable: true
+        seo:
+          $ref: '#/components/schemas/Seo'
+    Attribute:
+      type: object
+      required:
+      - code
+      - label
+      - data_type
+      - value
+      properties:
+        code:
+          type: string
+        label:
+          type: string
+        data_type:
+          type: string
+          enum:
+          - text
+          - number
+          - boolean
+        value:
+          oneOf:
+          - type: string
+          - type: number
+          - type: boolean
+    TemplateList:
+      type: object
+      required:
+      - id
+      - slug
+      - title
+      - summary
+      - language
+      - published_at
+      - categories
+      properties:
+        id:
+          type: string
+          format: uuid
+        slug:
+          type: string
+        title:
+          type: string
+        summary:
+          type: string
+        language:
+          type: string
+        published_at:
+          type: string
+          format: date-time
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategorySummary'
+    TemplateQuickPreview:
+      allOf:
+      - $ref: '#/components/schemas/TemplateList'
+      - type: object
+        required:
+        - license_code
+        properties:
+          license_code:
+            type: string
+    TemplateDetail:
+      allOf:
+      - $ref: '#/components/schemas/TemplateQuickPreview'
+      - type: object
+        required:
+        - description
+        - seo
+        - attributes
+        properties:
+          description:
+            type: string
+          seo:
+            $ref: '#/components/schemas/Seo'
+          attributes:
+            type: array
+            items:
+              $ref: '#/components/schemas/Attribute'
+    PaginatedCategories:
+      type: object
+      required:
+      - count
+      - next
+      - previous
+      - results
+      properties:
+        count:
+          type: integer
+        next:
+          type: string
+          format: uri
+          nullable: true
+        previous:
+          type: string
+          format: uri
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+    PaginatedTemplates:
+      type: object
+      required:
+      - count
+      - next
+      - previous
+      - results
+      properties:
+        count:
+          type: integer
+        next:
+          type: string
+          format: uri
+          nullable: true
+        previous:
+          type: string
+          format: uri
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateList'
