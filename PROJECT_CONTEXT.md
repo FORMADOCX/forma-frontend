@@ -231,3 +231,10 @@ Checks here: `npm test` 28/28 passed, `npm run check:structure` passed. `npm run
 - Two failing npm tests (95/97) resulted from **obsolete files remaining after overlay extraction**: `tests/submission-v05.test.cjs` was not included in v0.8.5 release. Fresh extraction has 91/91 passing tests.
 - Removed unused HomePage `t` binding to address ESLint's single warning. No design or API changes.
 - Required migration: unpack to an empty directory and transfer only environment configuration; never overlay an old source tree.
+
+## Public GitHub documentation baseline (2026-11-20)
+
+- Frontend v0.8.5 documentation is being prepared for `FORMADOCX/forma-frontend` with current Admin-Only Publishing described in English README, and historical release notes in CHANGELOG.
+- Added `docs/ARCHITECTURE.md` and `docs/DEPLOYMENT.md` grounded in existing Next.js 15 / Django REST API code; current `noindex` is hard-disabled pending a separate verified SEO rollout.
+- `.env.example` lists only safe local origin examples and the reserved indexing flag; `.gitignore` covers `.env.local`, `.vercel`, `.idea`, Next outputs and dependencies.
+- Documentation changes do not constitute proof of a live Vercel deployment, target Django API integration, or browser E2E. Preserve current UI, API, SEO, no-account and Admin-Only behavior.

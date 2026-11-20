@@ -1,3 +1,31 @@
+# Changelog
+
+Historical release notes below describe earlier implementations; **the current v0.8.5 MVP is Admin-Only Publishing**. Older Community Submission work is retained for historical context only and is not shipped in the current public UI.
+
+## 0.8.5 — Public repository documentation cleanup (2026-11-20)
+
+- Replaced cumulative release-by-release README with current English usage, architecture, environment, deployment and project status documentation.
+- Added `docs/ARCHITECTURE.md` and `docs/DEPLOYMENT.md`; clarified the split between internal/public Django origins and verified SEO launch policy.
+- Improved `.gitignore` for Vercel, IntelliJ IDEA, generated files and local environment configuration; provided a safe `.env.example`.
+- Retained the established Admin-Only Publishing model without changing application source code, routes, dependencies or API behavior.
+
+## 0.8.5 — Admin-Only Publishing (2026-11-19)
+
+- Removed public Community Submission UI, client submission code and navigation CTA.
+- `/submit` and `/uk/submit` deliberately return Next.js 404; CMS navigation and sitemap exclude the reserved slug.
+- Preserved public anonymous browsing, previews, controlled downloads, EN/UK and approved design. Submissions remain deferred in the roadmap.
+- Corrected an unused variable in `pages.tsx`; formatted the `getTemplates` TypeScript declaration without changing runtime logic.
+
+## 0.8.4 — CMS header navigation and integration (2026-11-19)
+
+- Added independent CMS-controlled header/footer visibility using shared Page Detail requests, EN/UK and bounded request batches.
+- Normalized allowlisted document preview/download URLs and split internal Django origin from public browser origin.
+- Supported JSON single- and multi-select attribute values; added CMS/integration regression tests and Windows-compatible ESLint harness fixes.
+
+## 0.8.3 — Template card interaction (2026-11-19)
+
+- Joined the Quick Preview hover extension visually to its parent card without reflowing the grid.
+
 ## 0.8.4 — Django integration compatibility and browser-origin safety
 
 - Fixed select/multi-select attribute DTO JSON types and safe detail formatting.
