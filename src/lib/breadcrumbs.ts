@@ -19,12 +19,19 @@ export function templateBreadcrumbs(locale:Locale,title:string,slug:string,categ
  ];
 }
 
-/** Category pages use their full known hierarchy; template pages deliberately omit ancestors. */
-export function categoryBreadcrumbs(locale:Locale,category:CategorySummary,parent:CategorySummary|null):BreadcrumbItem[]{
+/** Category pages deliberately show only Home / current category, regardless of depth. */
+export function categoryBreadcrumbs(locale:Locale,category:CategorySummary):BreadcrumbItem[]{
  return [
   {name:locale==='uk'?'Головна':'Home',path:'/'},
-  {name:dictionary[locale].categories,path:'/categories'},
-  ...(parent?[{name:parent.name,path:`/categories/${parent.slug}`}]:[]),
   {name:category.name,path:`/categories/${category.slug}`}
+ ];
+}
+
+/** Search breadcrumbs use the normalized search query, never other filters or invented labels. */
+export function searchBreadcrumbs(locale:Locale,query:string):BreadcrumbItem[]{
+ const q=query.trim();
+ return [
+  {name:locale==='uk'?'Головна':'Home',path:'/'},
+  {name:q||dictionary[locale].searchTitle,path:q?`/search?q=${encodeURIComponent(q)}`:'/search'}
  ];
 }

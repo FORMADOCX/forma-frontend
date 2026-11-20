@@ -1,3 +1,10 @@
+## 0.8.6 — Category and search breadcrumb refinement (2026-11-20)
+
+- Category Detail now displays only `Home / Current Category`, regardless of category depth, without an unnecessary parent-category API lookup.
+- EN/UK search results now display `Home / Search Query`; a missing query uses the localized Search page title. The query is safely encoded in the current breadcrumb URL.
+- Visible breadcrumbs and `BreadcrumbList` JSON-LD continue to consume the same items; catalog filters, routes and staging noindex are unchanged.
+- Added regression tests for category depth, EN/UK, empty and encoded searches, and unchanged Template Detail breadcrumbs.
+
 ## 0.8.6 — Contextual category breadcrumbs (2026-11-20)
 
 - Reused real Django category names and slugs in Template Detail breadcrumbs; omitted parent category on template pages; category pages can include verified parent category.

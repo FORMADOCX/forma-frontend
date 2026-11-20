@@ -39,11 +39,11 @@ test('multiple categories are selected deterministically by public slug, not inp
 test('missing or invalid public categories fall back safely without invented ancestors',()=>{
  assert.equal(helpers.selectBreadcrumbCategory(null),null);
  assert.equal(helpers.selectBreadcrumbCategory([{slug:'',name:'No slug'},{slug:'good',name:' '}]),null);
- assert.deepEqual(plain(helpers.categoryBreadcrumbs('en',{slug:'invoice',name:'Invoice'},null)).map(x=>x.path),['/','/categories','/categories/invoice']);
+ assert.deepEqual(plain(helpers.categoryBreadcrumbs('en',{slug:'invoice',name:'Invoice'})).map(x=>x.path),['/','/categories/invoice']);
 });
-test('category page can show actual parent, unlike shortened template breadcrumb',()=>{
+test('category page omits parent and Categories index even for second-level category',()=>{
  const parent={slug:'business',name:'Business'},child={slug:'invoices',name:'Invoices'};
- assert.deepEqual(plain(helpers.categoryBreadcrumbs('en',child,parent)).map(x=>x.path),['/','/categories','/categories/business','/categories/invoices']);
+ assert.deepEqual(plain(helpers.categoryBreadcrumbs('en',child)).map(x=>x.path),['/','/categories/invoices']);
  assert.deepEqual(plain(helpers.templateBreadcrumbs('en','Invoice','invoice',child)).map(x=>x.path),['/','/categories/invoices','/templates/invoice']);
 });
 test('UI breadcrumb and JSON-LD consume one shared array with current item not linked',()=>{
@@ -61,7 +61,7 @@ test('detail and category routes load only actual Django DTOs and preserve backe
  assert.match(page,/getTemplate\(slug,locale\)/);
  assert.match(page,/selectBreadcrumbCategory\(item\.categories\)/);
  assert.match(page,/getTemplates\(\{lang:locale,category:chosenCategory\.slug/);
- assert.match(page,/getCategory\(category\.parent_slug,locale\)/);
+ assert.doesNotMatch(page,/getCategory\(category\.parent_slug,locale\)/);
  assert.match(page,/fixedCategory=\{slug\}/);
  assert.match(page,/e\.status===404\)notFound\(\)/);
  assert.doesNotMatch(page,/item\.categories\[0\]/);

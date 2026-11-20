@@ -7,6 +7,8 @@ import {PageIntro} from './site-shell';
 import {CatalogFilters} from './catalog-filters';
 import {CatalogPagination} from './catalog-pagination';
 import {FormaSelect} from './forma-select';
+import {Breadcrumbs} from './breadcrumbs';
+import {searchBreadcrumbs} from '@/lib/breadcrumbs';
 
 export async function Catalog({locale,query={},search=false,fixedCategory,embedded=false}:{locale:Locale;query?:RawQuery;search?:boolean;fixedCategory?:string;embedded?:boolean}){
  const t=dictionary[locale];const params=parseCatalogQuery(query);
@@ -24,6 +26,7 @@ export async function Catalog({locale,query={},search=false,fixedCategory,embedd
  const filtersFailed=filtersResult.status==='rejected';
  const heading=fixedCategory?(locale==='uk'?'Шаблони категорії':'Category templates'):search?t.searchTitle:t.catalogTitle;
  return <div className={`container page-content${fixedCategory?' category-catalog':''}`}>
+  {search&&!embedded&&<Breadcrumbs locale={locale} items={searchBreadcrumbs(locale,params.q)}/>}
   {!embedded&&<PageIntro title={heading} description={!fixedCategory&&!search?t.catalogDescription:undefined}/>}
   <form className="catalog-controls" method="get" action={base} role="search">
    <label>{t.search}<input type="search" name="q" maxLength={120} defaultValue={params.q} placeholder={t.searchPlaceholder}/></label>

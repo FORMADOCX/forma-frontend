@@ -22,13 +22,7 @@ export async function CategoryListPage({locale}:{locale:Locale}){
 }
 export async function CategoryDetailPage({locale,slug,query={}}:{locale:Locale;slug:string;query?:RawQuery}){
  let category:Category;try{category=await getCategory(slug,locale)}catch(e){if(e instanceof ApiError&&e.status===404)notFound();return <div className="container page-content"><p role="alert">{locale==='uk'?'Категорія недоступна.':'Category unavailable.'}</p></div>}
- // Resolve only the actual parent supplied by the Category Detail DTO.
- // Missing/inaccessible parents must not be fabricated or linked.
- let parent:Category|null=null;
- if(category.parent_slug&&category.parent_slug!==category.slug){
-  try {const candidate=await getCategory(category.parent_slug,locale);if(candidate.slug===category.parent_slug&&candidate.language===locale)parent=candidate;}catch{/* Keep the current category functional when an ancestor is unavailable. */}
- }
- const items=categoryBreadcrumbs(locale,category,parent);
+ const items=categoryBreadcrumbs(locale,category);
  return <div className="container page-content"><Breadcrumbs locale={locale} items={items}/><PageIntro title={category.name} description={category.description}/>{fallback(locale,category.language)}<Catalog locale={locale} query={query} fixedCategory={slug} embedded/></div>;
 }
 export async function TemplateDetailPage({locale,slug}:{locale:Locale;slug:string}){

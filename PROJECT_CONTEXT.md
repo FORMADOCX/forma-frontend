@@ -1,3 +1,9 @@
+## Current breadcrumb navigation update (2026-11-20)
+
+**Implemented:** Category Detail always shows `Home / Category` (no category listing or parent step); Search shows `Home / query`, with a localized search title if the query is empty. Shared breadcrumbs keep UI and JSON-LD in sync. Template Detail rules and backend category selection remain unchanged. No extra parent API fetch on Category Detail. Admin-only publishing, staging noindex, EN/UK, and filters preserved.
+
+**Checks:** 129/129 Node tests with environment TypeScript via `NODE_PATH`; structure check passed. npm ci offline failed `ENOTCACHED` on yocto-queue, preventing full typecheck/lint/build. Browser QA not run.
+
 ## v0.8.6 — Category hierarchy and contextual breadcrumbs (2026-11-20)
 
 - Added shared `Breadcrumbs` (semantic list, current-page semantics, accessible SVG chevrons) and pure breadcrumb builders. One shared item array drives visible navigation and BreadcrumbList JSON-LD, including Home.
