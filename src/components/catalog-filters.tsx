@@ -4,6 +4,7 @@ import {useRouter} from 'next/navigation';
 import type {CatalogFilter} from '@/lib/api/types';
 import {applyCatalogFilters,catalogHref,clearCatalogFilters,type ParsedCatalogQuery} from '@/lib/api/query';
 import type {Locale} from '@/lib/i18n';
+import {FormaSelect} from './forma-select';
 
 export function CatalogFilters({filters,params,base,locale}:{filters:CatalogFilter[];params:ParsedCatalogQuery;base:string;locale:Locale}){
  const router=useRouter();
@@ -28,10 +29,7 @@ export function CatalogFilters({filters,params,base,locale}:{filters:CatalogFilt
  function clear(){router.push(catalogHref(base,clearCatalogFilters(params)));close();}
  const controls=(id:string)=><>
   <fieldset className="filter-group"><legend>{locale==='uk'?'Формат':'Format'}</legend>
-   <select aria-label={locale==='uk'?'Формат':'Format'} value={format} onChange={event=>setFormat(event.target.value)}>
-    <option value="">{locale==='uk'?'Усі формати':'All formats'}</option>
-    {['docx','xlsx','pdf'].map(value=><option key={value} value={value}>{value.toUpperCase()}</option>)}
-   </select>
+   <FormaSelect label={locale==='uk'?'Формат':'Format'} value={format} onChange={setFormat} options={[{value:'',label:locale==='uk'?'Усі формати':'All formats'},...['docx','xlsx','pdf'].map(value=>({value,label:value.toUpperCase()}))]}/>
   </fieldset>
   {[...filters].sort((a,b)=>a.order-b.order).map(group=><fieldset key={group.key} className="filter-group"><legend>{group.label}</legend>
    {group.options.map(option=>{

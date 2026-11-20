@@ -1,5 +1,4 @@
 import {Catalog} from './catalog';
-import {JsonLd,breadcrumbData} from '@/lib/json-ld';
 import type {RawQuery} from '@/lib/api/query';
 import Link from 'next/link';
 import {notFound} from 'next/navigation';
@@ -7,6 +6,8 @@ import {getCategories,getCategory,getTemplate,getTemplates,ApiError} from '@/lib
 import {localizedPath,dictionary,type Locale} from '@/lib/i18n';
 import {PageIntro} from './site-shell';
 import type {Category,TemplateDetail} from '@/lib/api/types';
+import {Breadcrumbs} from './breadcrumbs';
+import {categoryBreadcrumbs,selectBreadcrumbCategory,templateBreadcrumbs} from '@/lib/breadcrumbs';
 import {DocumentGallery} from './document-gallery';
 import {getDownloadUrl} from '@/lib/download-url';
 import {displayFileSize} from '@/lib/document-gallery';
@@ -21,19 +22,26 @@ export async function CategoryListPage({locale}:{locale:Locale}){
 }
 export async function CategoryDetailPage({locale,slug,query={}}:{locale:Locale;slug:string;query?:RawQuery}){
  let category:Category;try{category=await getCategory(slug,locale)}catch(e){if(e instanceof ApiError&&e.status===404)notFound();return <div className="container page-content"><p role="alert">{locale==='uk'?'Категорія недоступна.':'Category unavailable.'}</p></div>}
- const crumbs=breadcrumbData(locale,[{name:dictionary[locale].categories,path:'/categories'},{name:category.name,path:`/categories/${slug}`}]);
- return <div className="container page-content">{crumbs&&<JsonLd data={crumbs}/>}<nav aria-label="Breadcrumb" className="category-breadcrumb"><Link href={localizedPath(locale,'/')}>{locale==='uk'?'Головна':'Home'}</Link> / <Link href={localizedPath(locale,'/categories')}>{dictionary[locale].categories}</Link> / <span aria-current="page">{category.name}</span></nav><PageIntro title={category.name} description={category.description}/>{fallback(locale,category.language)}<Catalog locale={locale} query={query} fixedCategory={slug} embedded/></div>;
+ // Resolve only the actual parent supplied by the Category Detail DTO.
+ // Missing/inaccessible parents must not be fabricated or linked.
+ let parent:Category|null=null;
+ if(category.parent_slug&&category.parent_slug!==category.slug){
+  try {const candidate=await getCategory(category.parent_slug,locale);if(candidate.slug===category.parent_slug&&candidate.language===locale)parent=candidate;}catch{/* Keep the current category functional when an ancestor is unavailable. */}
+ }
+ const items=categoryBreadcrumbs(locale,category,parent);
+ return <div className="container page-content"><Breadcrumbs locale={locale} items={items}/><PageIntro title={category.name} description={category.description}/>{fallback(locale,category.language)}<Catalog locale={locale} query={query} fixedCategory={slug} embedded/></div>;
 }
 export async function TemplateDetailPage({locale,slug}:{locale:Locale;slug:string}){
  let item:TemplateDetail;
  try{item=await getTemplate(slug,locale)}catch(e){if(e instanceof ApiError&&e.status===404)notFound();const throttled=e instanceof ApiError&&e.status===429;return <div className="container page-content"><p role="alert">{throttled?(locale==='uk'?'Забагато запитів. Спробуйте пізніше.':'Too many requests. Please try again later.'):(locale==='uk'?'Деталі шаблону недоступні.':'Template details unavailable.')}</p></div>}
  const backendOrigin=getBrowserApiOrigin();
- const crumbs=breadcrumbData(locale,[{name:dictionary[locale].templates,path:'/templates'},{name:item.title,path:`/templates/${slug}`}]);
+ const chosenCategory=selectBreadcrumbCategory(item.categories);
+ const items=templateBreadcrumbs(locale,item.title,item.slug,chosenCategory);
  let related:Awaited<ReturnType<typeof getTemplates>>['results']=[];
- if(item.categories.length){try{const response=await getTemplates({lang:locale,category:item.categories[0].slug,page_size:5});related=response.results.filter(candidate=>candidate.slug!==item.slug).slice(0,4);}catch{/* Related content is optional. */}}
+ if(chosenCategory){try{const response=await getTemplates({lang:locale,category:chosenCategory.slug,page_size:5});related=response.results.filter(candidate=>candidate.slug!==item.slug).slice(0,4);}catch{/* Related content is optional. */}}
  const downloads=(item.formats??[]).map(file=>({file,url:getDownloadUrl(file,item.slug,backendOrigin)}));
  const firstDownload=downloads.find(entry=>entry.url);
- return <article className="container page-content detail">{crumbs&&<JsonLd data={crumbs}/>}<nav className="detail-breadcrumb" aria-label="Breadcrumb"><Link href={localizedPath(locale,'/')}>{locale==='uk'?'Головна':'Home'}</Link> / <Link href={localizedPath(locale,'/templates')}>{dictionary[locale].templates}</Link> / <span aria-current="page">{item.title}</span></nav>
+ return <article className="container page-content detail"><Breadcrumbs locale={locale} items={items} variant="detail"/>
   <div className="detail-body"><div className="detail-gallery-column"><DocumentGallery previews={item.previews??[]} formats={item.formats??[]} locale={locale} backendOrigin={backendOrigin}/></div>
    <div className="detail-summary"><div className="detail-kicker">{item.categories.map(c=>c.name).join(' / ')}</div><h1>{item.title}</h1><p className="lead">{item.summary}</p>{fallback(locale,item.language)}
     {!!item.categories.length&&<div className="detail-tags" aria-label={locale==='uk'?'Категорії':'Categories'}>{item.categories.map(c=><Link key={c.slug} href={localizedPath(locale,`/categories/${c.slug}`)}>{c.name}</Link>)}</div>}

@@ -38,10 +38,11 @@ test('shared loading indicator used by route loaders and Quick Preview',()=>{
  const pages=['src/app/(en)/templates/loading.tsx','src/app/(uk)/uk/templates/loading.tsx'];
  for(const p of pages)assert.match(read(p),/LoadingIndicator/);
 });
-test('native selects get chevron, disabled and focus behavior',()=>{
- const css=read('src/app/globals.css');assert.match(css,/\.catalog-controls select,\.filter-group select\{appearance:none/);
- assert.match(css,/background-image:url/);assert.match(css,/:disabled\{opacity:/);
- assert.match(read('src/components/catalog.tsx'),/<select name="sort"/);
+test('unified editorial dropdowns retain submitted category, sort and format values',()=>{
+ const css=read('src/app/globals.css');assert.match(css,/\.forma-select-menu/);assert.match(css,/\.forma-select-option/);
+ const select=read('src/components/forma-select.tsx');assert.match(select,/role="listbox"/);assert.match(select,/type="hidden" name=\{name\}/);
+ const catalog=read('src/components/catalog.tsx');assert.match(catalog,/FormaSelect name="sort"/);assert.match(catalog,/FormaSelect name="category"/);
+ assert.match(read('src/components/catalog-filters.tsx'),/<FormaSelect label=/);
 });
 test('numbered pagination keeps all Django catalog filters and valid limits',()=>{
  const pagination=read('src/components/catalog-pagination.tsx');assert.match(pagination,/Math.ceil\(count\/params.page_size\)/);

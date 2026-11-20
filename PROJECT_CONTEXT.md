@@ -1,3 +1,11 @@
+## v0.8.6 — Category hierarchy and contextual breadcrumbs (2026-11-20)
+
+- Added shared `Breadcrumbs` (semantic list, current-page semantics, accessible SVG chevrons) and pure breadcrumb builders. One shared item array drives visible navigation and BreadcrumbList JSON-LD, including Home.
+- Template Detail uses `Home / All Templates / Template` when the Detail DTO has no valid category, otherwise `Home / Selected Category / Template` regardless of whether that category is a top-level category or subcategory. Ancestors are deliberately omitted on template pages.
+- Current public `TemplateDetail.categories` items contain only `slug` and localized `name`, and no primary marker. Multiple categories are deterministically selected by lexicographically smallest non-empty slug; the result does **not** claim to be the Django `TemplateCategory.is_primary` choice. The same selection drives related-content filtering. To respect an editorially defined primary category in the future, Django should expose `primary_category: {slug, name} | null` (or an equivalent `is_primary` marker) in the Template Detail DTO, using existing model data; frontend must adopt it only after backend contract verification.
+- Category Detail uses the real `parent_slug` and resolves the published localized parent with the existing Category Detail API. Parent link is omitted when the lookup fails, returns a mismatching slug or a fallback language; category filters continue to be backend-scoped by `fixedCategory`.
+- No backend or API contract changes, no new URLs, no new dependencies, no SEO indexing activation, no change to Admin-Only Publishing. Full QA still requires real Django v0.8.4-fix2 responses and browser checks.
+
 ## Latest frontend patch — v0.8.6 Quick Preview clickability (2026-11-20)
 
 **Implemented in source:** The Quick Preview `dialog` is portaled to `document.body` to escape hover-panel `visibility`/`pointer-events` inheritance. The Template Detail Quick Preview trigger is removed; the full gallery, lightbox and controlled downloads remain. All other template cards retain their Quick Preview triggers (desktop/tablet only). Added dedicated regression tests; source changes do not modify API contracts.
@@ -255,3 +263,9 @@ Checks here: `npm test` 28/28 passed, `npm run check:structure` passed. `npm run
 - Detail gallery presents complete PNG page without landscape frame aspect ratio, fixed max-height or `object-fit:cover`; fullscreen viewer and real multi-page thumbnails remain. Hero search SVG submit control is centered in its input. Geometric document-outline loading indicator uses viewport-aware centering and reduced-motion support.
 - Approved .gitignore now covers Next.js, Vercel, JetBrains, VS Code, environment files, tests and transient artifacts. No dependencies, Django API, staging noindex or user-publishing rules changed.
 - Local packaging tests: 108/108 test cases passed; structure checks passed; 68 TS/TSX parser checks passed. Offline prod audit shows 0 reported vulnerabilities based on cached advisories. `npm ci --offline` failed ENOTCACHED (`yocto-queue`); normal `npm ci` failed with npm exit-handler error. Consequently full typecheck/lint/build have not passed here due to missing Next/React/ESLint packages. Browser viewport QA and staging E2E not performed.
+
+### v0.8.6 — Dropdown UI refinement
+
+- Implemented `src/components/forma-select.tsx` as the shared custom accessible dropdown for catalog category/sort and filter format.
+- Current query serialization is unchanged (named hidden inputs for GET controls, existing `applyCatalogFilters` for the sidebar). EN/UK switch and mobile navigation have consistent menu presentation; attribute checkboxes and radios remain as-is.
+- Added regression coverage `tests/editorial-dropdown-v086.test.cjs`. Full browser/keyboard smoke testing and production build are required before deployment approval.

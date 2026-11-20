@@ -403,3 +403,53 @@ button:disabled{cursor:not-allowed;opacity:.5}
 .forma-loading-symbol svg{width:40px;height:48px;display:block}
 @keyframes forma-breathe{0%,100%{opacity:.48;transform:translateY(2px)}50%{opacity:1;transform:translateY(-2px)}}
 @media(prefers-reduced-motion:reduce){.preview-drawer,.forma-loading-symbol{animation:none!important;transition:none!important;transform:none!important}.preview-drawer[open]{transform:none}}
+
+/* FORMA editorial dropdowns: catalog controls and sidebar share a single accessible component. */
+.forma-select{position:relative;width:100%;min-width:0;font-size:14px;color:var(--ink)}
+.catalog-controls .forma-select .forma-select-trigger,.filter-group .forma-select .forma-select-trigger{
+ display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-width:0;min-height:44px;
+ padding:10px 13px;background:var(--surface);border:1px solid var(--border);border-radius:8px;
+ color:var(--ink);font:inherit;font-weight:500;text-align:left;cursor:pointer;
+ transition:border-color .16s ease,background-color .16s ease,box-shadow .16s ease;
+}
+.forma-select-value{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.forma-select-chevron{flex:none;color:var(--accent);transition:transform .18s ease}
+.forma-select-open .forma-select-chevron{transform:rotate(180deg)}
+.catalog-controls .forma-select .forma-select-trigger:hover,.filter-group .forma-select .forma-select-trigger:hover{border-color:#9cb6a4;background:#fbfdfb}
+.catalog-controls .forma-select .forma-select-trigger:focus-visible,.filter-group .forma-select .forma-select-trigger:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.catalog-controls .forma-select .forma-select-trigger:disabled,.filter-group .forma-select .forma-select-trigger:disabled{opacity:.48;cursor:not-allowed}
+.forma-select-menu{position:absolute;inset-inline:0;top:calc(100% + 5px);z-index:90;max-height:min(290px,45dvh);overflow-y:auto;overscroll-behavior:contain;padding:5px;background:var(--surface);border:1px solid #d3ddd6;border-radius:9px;box-shadow:0 13px 32px #152a1e1a}
+.catalog-controls .forma-select .forma-select-option,.filter-group .forma-select .forma-select-option{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:39px;padding:9px 10px;border:0;border-radius:6px;background:transparent;color:var(--ink);font:inherit;font-size:13px;text-align:left;cursor:pointer}
+.forma-select-option-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.forma-select-option svg{flex:none;color:var(--accent)}
+.catalog-controls .forma-select .forma-select-option:hover,.filter-group .forma-select .forma-select-option:hover,.catalog-controls .forma-select .forma-select-option:focus-visible,.filter-group .forma-select .forma-select-option:focus-visible{background:#eef5f0;outline:none}
+.catalog-controls .forma-select .forma-select-option.is-selected,.filter-group .forma-select .forma-select-option.is-selected{color:var(--accent);font-weight:650}
+/* Language and mobile navigation use the same restrained surface treatment. */
+.locale-switch{position:relative}
+.locale-dropdown{position:relative}
+.locale-dropdown>summary{display:flex;align-items:center;gap:7px;list-style:none;cursor:pointer;padding:8px 5px;font-weight:700;min-height:40px;white-space:nowrap}
+.locale-dropdown>summary::-webkit-details-marker{display:none}
+.locale-dropdown>summary svg{color:var(--accent);transition:transform .18s ease}
+.locale-dropdown[open]>summary svg{transform:rotate(180deg)}
+.locale-dropdown-menu{position:absolute;right:0;top:calc(100% + 5px);z-index:100;min-width:136px;padding:5px;display:grid;gap:2px;border:1px solid #d3ddd6;border-radius:9px;background:var(--surface);box-shadow:0 13px 32px #152a1e1a}
+.locale-dropdown-menu a{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:6px;font-size:13px;font-weight:600;white-space:nowrap}
+.locale-dropdown-menu a:hover,.locale-dropdown-menu a:focus-visible,.locale-dropdown-menu a[aria-current]{color:var(--accent);background:#eef5f0;text-decoration:none}
+.mobile-navigation nav{border-color:#d3ddd6;box-shadow:0 13px 32px #152a1e1a}
+.mobile-navigation nav a{border-radius:6px}
+.mobile-navigation nav a:hover,.mobile-navigation nav a:focus-visible{background:#eef5f0;color:var(--accent);text-decoration:none}
+@media(prefers-reduced-motion:reduce){.forma-select-chevron,.locale-dropdown>summary svg,.catalog-controls .forma-select .forma-select-trigger,.filter-group .forma-select .forma-select-trigger{transition:none}}
+
+.catalog-controls .catalog-control{display:grid;gap:5px;min-width:0;font-size:12px;font-weight:600;color:#39414a}
+@media(max-width:520px){.catalog-controls .catalog-control{width:100%}}
+
+/* Shared contextual breadcrumb trail; same items drive visible links and JSON-LD. */
+.forma-breadcrumb{min-width:0;margin-bottom:24px;color:var(--muted);font-size:13px;line-height:1.5}
+.forma-breadcrumb ol{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;list-style:none;margin:0;padding:0;min-width:0}
+.forma-breadcrumb li{display:inline-flex;align-items:center;gap:10px;min-width:0;max-width:100%}
+.forma-breadcrumb a,.forma-breadcrumb [aria-current="page"]{display:inline-block;max-width:min(65vw,430px);overflow-wrap:anywhere}
+.forma-breadcrumb a{color:inherit;text-decoration:none;cursor:pointer;text-underline-offset:3px}
+.forma-breadcrumb a:hover{color:var(--accent);text-decoration:underline}
+.forma-breadcrumb a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+.forma-breadcrumb [aria-current="page"]{color:var(--ink);font-weight:500}
+.breadcrumb-chevron{width:12px;height:12px;flex:none;color:var(--muted)}
+@media(max-width:480px){.forma-breadcrumb ol{column-gap:7px}.forma-breadcrumb li{gap:7px}}

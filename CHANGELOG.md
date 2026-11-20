@@ -1,3 +1,10 @@
+## 0.8.6 — Contextual category breadcrumbs (2026-11-20)
+
+- Reused real Django category names and slugs in Template Detail breadcrumbs; omitted parent category on template pages; category pages can include verified parent category.
+- Added shared accessible breadcrumb component and matching `BreadcrumbList` JSON-LD sourced from the exact UI items, with EN/UK URLs.
+- Chose a deterministic category slug for multi-category templates because the public DTO does not expose `TemplateCategory.is_primary`; documented the minimal future backend enhancement.
+- Added regression tests. No changes to API routes, publication, SEO indexing, filtering or the document pipeline.
+
 ## 0.8.6 — Brand icon update (2026-11-20)
 - Replaced App Router browser icons using the user-approved green FORMA symbol: SVG, PNG 16/32 and Apple touch 180.
 - No change to routes, content, API, dependencies, or UI layout.
@@ -197,3 +204,10 @@ Historical release notes below describe earlier implementations; **the current v
 - Removed unused `t` binding from `HomePage` (`src/components/pages.tsx`); no UI changes.
 - Windows logs exposed stale `tests/submission-v05.test.cjs` when an older project folder was overwritten instead of replaced. The source ZIP intentionally excludes this obsolete test and the removed submission form. Extract into a **new empty directory**; do not merge into an earlier frontend folder.
 - Local clean archive checks: 91/91 Node tests and structure guard pass. Full typecheck/lint/build should be verified on Windows after fresh `npm ci`.
+
+### v0.8.6 — Editorial dropdown consistency
+
+- Added a shared keyboard-accessible `FormaSelect` for category, sorting, and format controls, retaining original URL parameters and filter semantics.
+- Styled EN/UK language and mobile navigation menus as compact editorial dropdown surfaces.
+- Preserved checkbox/radio groups for backend-defined multi-/single-select attributes.
+- No backend APIs, package dependencies, security settings, or document preview logic changed.

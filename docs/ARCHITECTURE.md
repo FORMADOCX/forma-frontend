@@ -38,3 +38,9 @@ The current implementation forces indexing **off** (`src/lib/seo.ts`): pages rem
 The frontend has no user accounts, admin publishing UI, file storage, or public upload form. Backend malware scans, private storage and publishing permissions are backend concerns and cannot be guaranteed by frontend-only checks. The provisional historic OpenAPI file in this repository is not proof of compatibility with a deployed backend; confirm live DTOs and full download/preview flows before launch.
 
 See [Design System](DESIGN_SYSTEM.md), [Deployment](DEPLOYMENT.md) and the [Changelog](../CHANGELOG.md).
+
+## Category hierarchy and breadcrumbs
+
+`src/lib/breadcrumbs.ts` builds display-ready breadcrumb items from validated public DTO fields, and `src/components/breadcrumbs.tsx` renders both accessible links and `BreadcrumbList` JSON-LD from that same list. Template Detail receives localized `categories: [{slug, name}]` without a primary flag; the current stable fallback selects the lexicographically smallest slug, never array order. Template Detail deliberately does not display an ancestor category. Category Detail uses `parent_slug` and resolves a published parent through the existing Category Detail API; a missing or nonlocalized parent is omitted. The `Catalog` category filter continues to use the requested slug.
+
+Django models define `TemplateCategory.is_primary`, but the available public serializer does **not** return that preference. A minimal future, reviewed backend change could add `primary_category: {slug, name} | null` to Template Detail; the frontend must not infer it from model ordering or invent that field before the API changes.

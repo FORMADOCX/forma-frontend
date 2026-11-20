@@ -6,6 +6,7 @@ import {TemplateCard} from './template-card';
 import {PageIntro} from './site-shell';
 import {CatalogFilters} from './catalog-filters';
 import {CatalogPagination} from './catalog-pagination';
+import {FormaSelect} from './forma-select';
 
 export async function Catalog({locale,query={},search=false,fixedCategory,embedded=false}:{locale:Locale;query?:RawQuery;search?:boolean;fixedCategory?:string;embedded?:boolean}){
  const t=dictionary[locale];const params=parseCatalogQuery(query);
@@ -26,8 +27,8 @@ export async function Catalog({locale,query={},search=false,fixedCategory,embedd
   {!embedded&&<PageIntro title={heading} description={!fixedCategory&&!search?t.catalogDescription:undefined}/>}
   <form className="catalog-controls" method="get" action={base} role="search">
    <label>{t.search}<input type="search" name="q" maxLength={120} defaultValue={params.q} placeholder={t.searchPlaceholder}/></label>
-   {!fixedCategory&&<label>{t.categories}<select name="category" defaultValue={params.category}><option value="">{locale==='uk'?'Усі категорії':'All categories'}</option>{categories.map(c=><option key={c.id} value={c.slug}>{c.name}</option>)}</select></label>}
-   <label>{locale==='uk'?'Сортування':'Sort by'}<select name="sort" defaultValue={params.sort}><option value="newest">{locale==='uk'?'Спочатку нові':'Newest'}</option><option value="oldest">{locale==='uk'?'Спочатку старі':'Oldest'}</option><option value="title">Title A–Z</option><option value="-title">Title Z–A</option></select></label>
+   {!fixedCategory&&<div className="catalog-control"><span>{t.categories}</span><FormaSelect name="category" label={t.categories} defaultValue={params.category} options={[{value:'',label:locale==='uk'?'Усі категорії':'All categories'},...categories.map(c=>({value:c.slug,label:c.name}))]}/></div>}
+   <div className="catalog-control"><span>{locale==='uk'?'Сортування':'Sort by'}</span><FormaSelect name="sort" label={locale==='uk'?'Сортування':'Sort by'} defaultValue={params.sort} options={[{value:'newest',label:locale==='uk'?'Спочатку нові':'Newest'},{value:'oldest',label:locale==='uk'?'Спочатку старі':'Oldest'},{value:'title',label:'Title A–Z'},{value:'-title',label:'Title Z–A'}]}/></div>
    {params.page_size!==20&&<input type="hidden" name="page_size" value={params.page_size}/>}
    {params.rawFormat.map((value,index)=><input key={index} type="hidden" name="format" value={value}/>)}
    {Object.entries(params.rawAttributes).flatMap(([key,values])=>values.map((value,index)=><input key={`${key}-${index}`} type="hidden" name={`attr.${key}`} value={value}/>))}

@@ -89,3 +89,12 @@ The former Community Submission strip is removed. Keep Homepage hero/category/fe
 - Page-level loading uses a geometric document outline and a viewport-aware content region. Reduced-motion users see a static indicator, with localized screen-reader status.
 - Search magnifier is centered within the input, remains clickable, and shares native GET form submission with Enter.
 - Native dialogs are responsive, but browser visual QA with the staging API is still required at 390, 768, 1024, 1440 and 1920px. No improvement to the source resolution of backend PNG images is claimed.
+
+### Editorial dropdowns (v0.8.6 refinement)
+
+- `FormaSelect` is the shared accessible single-value dropdown used for catalog category, sorting, and sidebar/mobile format filters. Options remain backend-driven where applicable.
+- The custom trigger uses a neutral white surface, subtle green selected/hover states, a small SVG chevron and a scrollable option menu. Escape, Arrow keys, Home/End, Enter/Space, outside-click dismissal, and focus restoration are handled in the component.
+- In GET forms, `FormaSelect` submits a hidden named input with the same query key (`category` or `sort`); dynamic attribute filter state and format URL semantics are unchanged.
+- The EN/UK language switch uses a native `<details>` dropdown with localized route links; the mobile navigation menu uses the same visual surface language.
+- Multi-select dynamic attributes remain accessible native checkbox groups and single-select attributes remain radio groups; these are deliberately not replaced with single-value dropdowns.
+- Reduced motion suppresses chevron transitions. Do not add a second dropdown library or duplicate UI markup for each filter.
