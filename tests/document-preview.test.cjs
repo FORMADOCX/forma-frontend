@@ -29,10 +29,13 @@ test('untrusted host, non-preview paths, invalid protocols and absent preview ar
  assert.equal(getPreviewSource('javascript:alert(1)'),null);
 }));
 test('real image is wired into card, dialog and detail with no fabricated fallback image',()=>{
- for(const file of ['src/components/template-card.tsx','src/components/quick-preview.tsx']){
+ for(const file of ['src/components/template-card.tsx']){
   const code=fs.readFileSync(file,'utf8');
   assert.match(code,/<DocumentCover url=\{(?:template|data|item)\.cover_preview_url\}/);
  }
+ const modal=fs.readFileSync('src/components/quick-preview.tsx','utf8');
+ assert.match(modal,/getPreviewSource\(data.cover_preview_url,backendOrigin\)/);
+ assert.match(modal,/unoptimized=\{source.unoptimized\}/);
  const detail=fs.readFileSync('src/components/catalog-data-pages.tsx','utf8');
  assert.match(detail,/<DocumentGallery previews=\{item\.previews/);
  const component=fs.readFileSync('src/components/document-cover.tsx','utf8');
@@ -53,6 +56,6 @@ test('server passes configured backend origin to the client modal and document c
  const modal=fs.readFileSync('src/components/quick-preview.tsx','utf8');
  const cover=fs.readFileSync('src/components/document-cover.tsx','utf8');
  assert.match(card,/backendOrigin=\{getBrowserApiOrigin\(\)\}/);
- assert.match(modal,/backendOrigin=\{backendOrigin\}/);
+ assert.match(modal,/getPreviewSource\(data.cover_preview_url,backendOrigin\)/);
  assert.match(cover,/getPreviewSource\(url,backendOrigin\)/);
 });

@@ -242,3 +242,10 @@ Checks here: `npm test` 28/28 passed, `npm run check:structure` passed. `npm run
 - Added `docs/ARCHITECTURE.md` and `docs/DEPLOYMENT.md` grounded in existing Next.js 15 / Django REST API code; current `noindex` is hard-disabled pending a separate verified SEO rollout.
 - `.env.example` lists only safe local origin examples and the reserved indexing flag; `.gitignore` covers `.env.local`, `.vercel`, `.idea`, Next outputs and dependencies.
 - Documentation changes do not constitute proof of a live Vercel deployment, target Django API integration, or browser E2E. Preserve current UI, API, SEO, no-account and Admin-Only behavior.
+
+## Frontend v0.8.6 — Preview UX correction (2026-11-20)
+
+- Current implementation: native right-side Quick Preview desktop dialog, loading/error states, trusted PNG and download URLs, no background interaction, explicit body scroll lock, focus restoration and AbortController cleanup. Mobile (<768px) hides Quick Preview and prevents the network request; existing card links navigate to Detail.
+- Detail gallery presents complete PNG page without landscape frame aspect ratio, fixed max-height or `object-fit:cover`; fullscreen viewer and real multi-page thumbnails remain. Hero search SVG submit control is centered in its input. Geometric document-outline loading indicator uses viewport-aware centering and reduced-motion support.
+- Approved .gitignore now covers Next.js, Vercel, JetBrains, VS Code, environment files, tests and transient artifacts. No dependencies, Django API, staging noindex or user-publishing rules changed.
+- Local packaging tests: 108/108 test cases passed; structure checks passed; 68 TS/TSX parser checks passed. Offline prod audit shows 0 reported vulnerabilities based on cached advisories. `npm ci --offline` failed ENOTCACHED (`yocto-queue`); normal `npm ci` failed with npm exit-handler error. Consequently full typecheck/lint/build have not passed here due to missing Next/React/ESLint packages. Browser viewport QA and staging E2E not performed.

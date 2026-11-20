@@ -31,8 +31,8 @@ System fonts are used intentionally to avoid third-party font loading. Interacti
 - `Catalog` + `CatalogFilters`: URL-driven API filtering. Responsive grid, native single/multi/boolean inputs, mobile dialog with Apply/Clear and focus return.
 - `DocumentGallery`: backend document page images with thumbnail buttons, arrow navigation, Home/End, a live page counter and native image aspect ratios.
 - `TemplateDetailPage`: genuine file download links validated against the configured backend, real metadata and grouped sections.
-- `QuickPreview`: native dialog with real cover, compact DTO fields, trusted available download actions, Escape / native scroll locking / focus return.
-- `CmsPageView`, `SafeMarkdown`, `SubmissionForm`: preserved accessibility and backend-driven states.
+- `QuickPreview`: right-side desktop native dialog drawer with a real cover, compact DTO fields, trusted download actions, Escape/backdrop/Close, scroll locking and focus return; disabled on mobile (cards link to full details).
+- `CmsPageView` and `SafeMarkdown`: CMS content and backend-driven states. Public submission forms are removed under Admin-Only Publishing.
 
 ## Responsive rules
 
@@ -62,9 +62,9 @@ Related templates on Detail are fetched from the **same published category** via
 ## v0.8.2 homepage assets and progressive disclosure
 
 - `forma-hero.webp` is a 2:1 decorative illustration shown beside the homepage headline; alt is empty because it contains sample document design rather than actual downloadable products.
-- `forma-contribute.webp` is an understated 3:1 background, with readable text and CTA over its uncluttered center; assets are bundled in `/public/images/`.
+- The former Community Submission background is not included in the current Admin-Only MVP.
 - Featured category tiles have a pale mint `#edf5ef` background with text on one line (`text-overflow:ellipsis`) and no icons.
-- Template-card summaries render from `TemplateList.summary` if present. On hover-capable desktops the Quick Preview action is located in an absolutely positioned panel BELOW the card (no reflow), revealed by `:hover` or `:focus-within`; on touch it is in document flow, visible by default, and at least 44px tall. The modal itself is unchanged.
+- Template-card summaries render from `TemplateList.summary` if present. On hover-capable desktops the Quick Preview action is located in an absolutely positioned panel BELOW the card (no reflow), revealed by `:hover` or `:focus-within`; on mobile (<=767px) the Quick Preview trigger is omitted from presentation and template links lead directly to Detail. The desktop preview uses a right-side drawer.
 - Hero search placeholder: “Search templates (e.g., invoice, report, proposal)”. Featured template CTA: “View All Templates”. The global header retains no static About link.
 
 ## Admin-only MVP (v0.8.5)
@@ -80,3 +80,12 @@ The former Community Submission strip is removed. Keep Homepage hero/category/fe
 - `LoadingIndicator` is used for route and Quick Preview loading states.
 - Catalog selects remain native. Pagination links preserve query and filter parameters.
 - Hover image scale 1.03, 250ms; all animations disabled or reduced under reduced-motion preferences.
+
+## v0.8.6 preview and viewing correction (2026-11-20)
+
+- Desktop Quick Preview is a native `<dialog>` right-side drawer. It uses the trusted Django PNG cover, abortable requests, real download URLs, localized summary and full-detail link. The dialog is top-layer: no decorative overlay intercepts controls.
+- Under 768px, card Quick Preview controls are hidden and the component guards against accidental API fetches; the template image and title still navigate to Template Detail. Tablet widths from 768px use a wider proportional drawer.
+- The main Document Gallery page is shown at intrinsic aspect ratio with `height:auto`, `object-fit:contain`, and no fixed maximum height or landscape aspect container. Thumbnails and the existing `DocumentLightbox` remain.
+- Page-level loading uses a geometric document outline and a viewport-aware content region. Reduced-motion users see a static indicator, with localized screen-reader status.
+- Search magnifier is centered within the input, remains clickable, and shares native GET form submission with Enter.
+- Native dialogs are responsive, but browser visual QA with the staging API is still required at 390, 768, 1024, 1440 and 1920px. No improvement to the source resolution of backend PNG images is claimed.

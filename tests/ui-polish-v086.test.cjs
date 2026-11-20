@@ -33,7 +33,7 @@ test('shared document lightbox uses real trusted URLs and native modal, supports
  assert.match(qp,/DocumentLightbox/);assert.match(qp,/getPreviewSource\(data.cover_preview_url,backendOrigin\)/);
 });
 test('shared loading indicator used by route loaders and Quick Preview',()=>{
- const loader=read('src/components/loading-indicator.tsx');assert.match(loader,/role="status"/);assert.match(loader,/forma-spinner/);
+ const loader=read('src/components/loading-indicator.tsx');assert.match(loader,/role="status"/);assert.match(loader,/forma-loading-symbol/);
  assert.match(read('src/components/quick-preview.tsx'),/LoadingIndicator locale=\{locale\}/);
  const pages=['src/app/(en)/templates/loading.tsx','src/app/(uk)/uk/templates/loading.tsx'];
  for(const p of pages)assert.match(read(p),/LoadingIndicator/);

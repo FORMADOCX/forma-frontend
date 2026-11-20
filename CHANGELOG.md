@@ -7,6 +7,13 @@
 
 # Changelog
 
+## 0.8.6 — Quick Preview drawer and full-page gallery correction (2026-11-20)
+
+- Replaced centered Quick Preview dialog with accessible desktop right-side drawer; mobile cards open Template Detail without Quick Preview network requests.
+- Removed fixed-ratio/fixed-height detail gallery clipping; kept real Django previews, thumbnails and the shared fullscreen lightbox.
+- Centered the Hero search icon and added a geometric localized, reduced-motion-compatible loader with viewport-aware placement.
+- Added regression tests and refreshed .gitignore according to the approved development toolchain. No API or dependency changes.
+
 Historical release notes below describe earlier implementations; **the current v0.8.5 MVP is Admin-Only Publishing**. Older Community Submission work is retained for historical context only and is not shipped in the current public UI.
 
 ## 0.8.5 — Public repository documentation cleanup (2026-11-20)
@@ -73,6 +80,13 @@ Historical release notes below describe earlier implementations; **the current v
 - Added submission tests and deployment/CORS documentation; no mock APIs or changes to Django.
 
 # Changelog
+
+## 0.8.6 — Quick Preview drawer and full-page gallery correction (2026-11-20)
+
+- Replaced centered Quick Preview dialog with accessible desktop right-side drawer; mobile cards open Template Detail without Quick Preview network requests.
+- Removed fixed-ratio/fixed-height detail gallery clipping; kept real Django previews, thumbnails and the shared fullscreen lightbox.
+- Centered the Hero search icon and added a geometric localized, reduced-motion-compatible loader with viewport-aware placement.
+- Added regression tests and refreshed .gitignore according to the approved development toolchain. No API or dependency changes.
 
 ## 0.3.1 — 2026-11-18
 
