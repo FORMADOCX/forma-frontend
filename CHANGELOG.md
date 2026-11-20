@@ -1,3 +1,13 @@
+## 0.8.6 — Brand icon update (2026-11-20)
+- Replaced App Router browser icons using the user-approved green FORMA symbol: SVG, PNG 16/32 and Apple touch 180.
+- No change to routes, content, API, dependencies, or UI layout.
+
+## 0.8.6 — Quick Preview clickability and Detail cleanup (2026-11-20)
+
+- Portaled the Quick Preview native dialog to `document.body`, outside the card hover-action wrapper that applies `visibility: hidden` and `pointer-events: none` when hover ends. This keeps drawer links, image zoom, downloads and Close interactive after moving the pointer into the drawer.
+- Removed the redundant Quick Preview button from Template Detail. Full document previews, gallery/lightbox and downloads remain on that page; related-template cards can still open Quick Preview.
+- Added regressions for portal isolation and Detail behavior. Updated one legacy test and removed obsolete Detail-only button CSS. No API, dependencies, SEO or EN/UK changes.
+
 ## 0.8.6 — UI/UX polish
 
 - Browser icons, clickable search icon, conditional featured sections, skip-to-content keyboard behavior.

@@ -11,7 +11,6 @@ import {DocumentGallery} from './document-gallery';
 import {getDownloadUrl} from '@/lib/download-url';
 import {displayFileSize} from '@/lib/document-gallery';
 import {TemplateCard} from './template-card';
-import {QuickPreview} from './quick-preview';
 import {formatAttributeValue} from '@/lib/attribute-value';
 import {getBrowserApiOrigin} from '@/lib/api/public-urls';
 const fallback=(locale:Locale,actual:string)=>actual!==locale?<p className="translation-notice">{locale==='uk'?'Український переклад недоступний. Показано текст іншою мовою.':'Requested translation unavailable; showing fallback text.'}</p>:null;
@@ -39,7 +38,7 @@ export async function TemplateDetailPage({locale,slug}:{locale:Locale;slug:strin
    <div className="detail-summary"><div className="detail-kicker">{item.categories.map(c=>c.name).join(' / ')}</div><h1>{item.title}</h1><p className="lead">{item.summary}</p>{fallback(locale,item.language)}
     {!!item.categories.length&&<div className="detail-tags" aria-label={locale==='uk'?'Категорії':'Categories'}>{item.categories.map(c=><Link key={c.slug} href={localizedPath(locale,`/categories/${c.slug}`)}>{c.name}</Link>)}</div>}
     <div className="detail-actions">{firstDownload?.url?<a href={firstDownload.url} className="button-link detail-primary-download" rel="noopener noreferrer">↓ {locale==='uk'?'Завантажити шаблон':'Download Template'} ({firstDownload.file.format.toUpperCase()})</a>:<span className="preview-note">{locale==='uk'?'Завантаження наразі недоступне':'Download currently unavailable'}</span>}
-     <QuickPreview slug={item.slug} locale={locale} backendOrigin={backendOrigin}/></div>
+    </div>
     <dl className="detail-specs"><div><dt>{locale==='uk'?'Формати':'Formats'}</dt><dd>{item.formats.length?[...new Set(item.formats.map(f=>f.format.toUpperCase()))].join(', '):'—'}</dd></div><div><dt>{locale==='uk'?'Файли':'Files'}</dt><dd>{item.formats.length}</dd></div><div><dt>{locale==='uk'?'Ліцензія':'License'}</dt><dd>{item.license_code}</dd></div>{item.attributes.map(a=>{const value=formatAttributeValue(a,locale);return value?<div key={a.code}><dt>{a.label}</dt><dd>{value}</dd></div>:null})}</dl>
    </div></div>
   <nav className="detail-section-nav" aria-label={locale==='uk'?'Розділи документа':'Document sections'}><a href="#document-description">{locale==='uk'?'Опис':'Description'}</a><a href="#document-files">{locale==='uk'?'Файли':'What’s included'}</a><a href="#document-compatibility">{locale==='uk'?'Формати та сумісність':'Format & compatibility'}</a></nav>

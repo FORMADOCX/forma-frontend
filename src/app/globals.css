@@ -269,8 +269,6 @@ h2{font-size:23px}
 .related-section .template-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
 @media(max-width:768px){.related-section .template-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.related-section .template-grid{grid-template-columns:1fr}}
-.detail-actions>.quick-preview-trigger{flex:1 1 145px;border:1px solid #aeb7b6;border-radius:7px;padding:10px 15px;background:transparent;color:var(--ink);font-weight:650;font-size:14px;min-height:43px}
-.detail-actions>.quick-preview-trigger:hover{border-color:var(--accent);color:var(--accent)}
 
 /* v0.8.2 — commissioned homepage assets. Hero artwork is editorial and is NOT a template preview. */
 .home-hero{display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:clamp(24px,3vw,48px);align-items:center;padding:26px 0 32px}

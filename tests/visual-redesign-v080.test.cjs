@@ -39,7 +39,7 @@ test('detail binds real gallery pages, attributes and controlled download URLs',
  assert.match(src,/getDownloadUrl\(file,item.slug,backendOrigin\)/);
  assert.match(src,/item\.attributes\.map/);
  assert.match(src,/firstDownload\?\.url/);
- assert.match(src,/<QuickPreview slug=\{item.slug\}/);
+ assert.doesNotMatch(src,/<QuickPreview slug=\{item.slug\}/);
  assert.match(gallery,/groupDocumentPreviews\(previews,formats\)/);
  assert.match(gallery,/getPreviewSource\(p\.url,backendOrigin\)/);
  assert.match(gallery,/aria-current=\{index===activePageIndex/);

@@ -1,6 +1,7 @@
 'use client';
 import {useEffect,useRef,useState} from 'react';
 import Link from 'next/link';
+import {createPortal} from 'react-dom';
 import Image from 'next/image';
 import {dictionary,localizedPath,type Locale} from '@/lib/i18n';
 import type {TemplateQuickPreview} from '@/lib/api/types';
@@ -17,6 +18,8 @@ export function QuickPreview({slug,locale,backendOrigin}:{slug:string;locale:Loc
  const [data,setData]=useState<TemplateQuickPreview|null>(null);
  const [busy,setBusy]=useState(false);
  const [error,setError]=useState(false);
+ const [portalRoot,setPortalRoot]=useState<HTMLElement|null>(null);
+ useEffect(()=>{setPortalRoot(document.body)},[]);
  useEffect(()=>{const onResize=()=>{if(window.matchMedia('(max-width: 767px)').matches)dialog.current?.close()};window.addEventListener('resize',onResize);return ()=>{window.removeEventListener('resize',onResize);request.current?.abort();if(previousBodyOverflow.current!==null)document.body.style.overflow=previousBodyOverflow.current}},[]);
  const t=dictionary[locale];
  const close=()=>dialog.current?.close();
@@ -40,9 +43,9 @@ export function QuickPreview({slug,locale,backendOrigin}:{slug:string;locale:Loc
  }
  return <>
   <button ref={trigger} className="quick-preview-trigger" type="button" onClick={open}><span aria-hidden="true">◎</span> {t.preview}</button>
-  <dialog ref={dialog} className="preview-dialog preview-drawer" aria-label={locale==='uk'?'Швидкий перегляд шаблону':'Template quick preview'} onClose={onClose} onClick={event=>{if(event.target===dialog.current)close()}}>
+  {portalRoot&&createPortal(<dialog ref={dialog} className="preview-dialog preview-drawer" aria-label={locale==='uk'?'Швидкий перегляд шаблону':'Template quick preview'} onClose={onClose} onClick={event=>{if(event.target===dialog.current)close()}}>
    <div className="preview-content preview-drawer-content">
-    <div className="preview-top preview-drawer-header"><h2>{data?.title??t.preview}</h2><button type="button" className="preview-drawer-close" onClick={close} aria-label={t.close}>×</button></div>
+    <div className="preview-top preview-drawer-header"><h2>{data?.title??t.preview}</h2><button type="button" className="preview-drawer-close" onClick={close} autoFocus aria-label={t.close}>×</button></div>
     <div className="preview-drawer-body">
      {busy&&<LoadingIndicator locale={locale} compact/>}
      {error&&<p role="alert">{locale==='uk'?'Попередній перегляд недоступний.':'Quick preview is unavailable.'}</p>}
@@ -61,6 +64,6 @@ export function QuickPreview({slug,locale,backendOrigin}:{slug:string;locale:Loc
      </>}
     </div>
    </div>
-  </dialog>
+  </dialog>,portalRoot)}
  </>;
 }

@@ -1,3 +1,9 @@
+## Latest frontend patch — v0.8.6 Quick Preview clickability (2026-11-20)
+
+**Implemented in source:** The Quick Preview `dialog` is portaled to `document.body` to escape hover-panel `visibility`/`pointer-events` inheritance. The Template Detail Quick Preview trigger is removed; the full gallery, lightbox and controlled downloads remain. All other template cards retain their Quick Preview triggers (desktop/tablet only). Added dedicated regression tests; source changes do not modify API contracts.
+
+**Verification:** 111/111 Node tests passed (using environment-provided TypeScript via `NODE_PATH`), structure check passed, TypeScript parser found 0 syntax errors across 68 TS/TSX files. `npm ci --offline` failed `ENOTCACHED` for yocto-queue; complete typecheck/lint/build and browser interaction remain unverified in this container.
+
 ## Frontend v0.8.6 UI polish (2026-11-20)
 
 Implemented a minimal branded SVG/PNG icon set, functional header search icon, hidden empty featured sections, keyboard-only skip link, shared accessible document lightbox (real Django images only), loading indicator, native select styling, numbered URL-preserving pagination, interactive cursors, and image hover zoom. Admin-only publishing, EN/UK, noindex, CMS, backend API, and Next.js App Router maintained. Browser QA and live Django integration must be confirmed independently.
