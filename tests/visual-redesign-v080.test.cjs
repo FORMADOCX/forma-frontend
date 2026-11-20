@@ -68,6 +68,6 @@ test('responsive styles contain all requested breakpoints with no forced horizon
 test('SEO indexing config and PostCSS override are preserved',()=>{
  const pkg=JSON.parse(read('package.json'));
  assert.equal(pkg.overrides.next.postcss,'8.5.23');
- assert.equal(pkg.version,'0.8.5');
+ assert.equal(pkg.version,'0.8.6');
  assert.match(read('src/lib/seo.ts'),/indexingEnabled = false/);
 });

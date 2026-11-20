@@ -27,7 +27,7 @@ export function Footer({locale,pages=[]}:{locale:Locale;pages?:{slug:string;titl
 }
 export async function SiteShell({locale,children}:{locale:Locale;children:React.ReactNode}){
  const {headerLinks,footerLinks}=await getCmsNavigation(locale);
- return <><a href="#content" className="skip-link">{locale==='uk'?'До вмісту':'Skip to content'}</a><Header locale={locale} headerLinks={headerLinks}/><main id="content">{children}</main><Footer locale={locale} pages={footerLinks}/></>;
+ return <><a href="#content" className="skip-link">{locale==='uk'?'До вмісту':'Skip to content'}</a><Header locale={locale} headerLinks={headerLinks}/><main id="content" tabIndex={-1}>{children}</main><Footer locale={locale} pages={footerLinks}/></>;
 }
 export function PageIntro({eyebrow,title,description}:{eyebrow?:string;title:string;description?:string}){
  return <div className="page-intro">{eyebrow&&<p className="eyebrow">{eyebrow}</p>}<h1>{title}</h1>{description&&<p className="lead">{description}</p>}</div>;

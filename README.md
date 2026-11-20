@@ -105,6 +105,6 @@ English routes are rooted at `/`; Ukrainian routes are rooted at `/uk`. Metadata
 
 ## Project Status
 
-The v0.8.5 source includes Admin-Only Publishing and the agreed design system. Windows development logs reported passing TypeScript, ESLint, 91 tests and a Next.js production build after stale files were removed. These are **local build checks**, not a live production or browser end-to-end certification. Integration with the target Django deployment, Vercel configuration, domain approval and visual/browser QA remain to be verified.
+The v0.8.6 source includes Admin-Only Publishing and the agreed design system. Windows development logs reported passing TypeScript, ESLint, 91 tests and a Next.js production build after stale files were removed. These are **local build checks**, not a live production or browser end-to-end certification. Integration with the target Django deployment, Vercel configuration, domain approval and visual/browser QA remain to be verified.
 
 Changes and older milestones are recorded in [CHANGELOG.md](CHANGELOG.md). Community submissions are deferred to the roadmap and are **not** available in the current frontend.

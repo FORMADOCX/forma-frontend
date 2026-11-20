@@ -5,6 +5,9 @@ import {dictionary,localizedPath,type Locale} from '@/lib/i18n';
 import type {TemplateQuickPreview} from '@/lib/api/types';
 import {DocumentCover} from './document-cover';
 import {getDownloadUrl} from '@/lib/download-url';
+import {getPreviewSource} from '@/lib/preview-image';
+import {DocumentLightbox} from './document-lightbox';
+import {LoadingIndicator} from './loading-indicator';
 export function QuickPreview({slug,locale,backendOrigin}:{slug:string;locale:Locale;backendOrigin?:string}){
  const dialog=useRef<HTMLDialogElement>(null);const trigger=useRef<HTMLButtonElement>(null);
  const [data,setData]=useState<TemplateQuickPreview|null>(null);const [busy,setBusy]=useState(false);const [error,setError]=useState(false);
@@ -17,8 +20,8 @@ export function QuickPreview({slug,locale,backendOrigin}:{slug:string;locale:Loc
  return <><button ref={trigger} className="quick-preview-trigger" type="button" onClick={open}><span aria-hidden="true">◎</span> {t.preview}</button>
   <dialog ref={dialog} className="preview-dialog" aria-label={t.preview} onClose={()=>trigger.current?.focus()} onClick={event=>{if(event.target===dialog.current)close()}}>
    <div className="preview-content"><div className="preview-top"><h2>{data?.title??t.preview}</h2><button type="button" onClick={close} aria-label={t.close}>×</button></div>
-    {busy&&<p role="status">{locale==='uk'?'Завантаження…':'Loading…'}</p>}{error&&<p role="alert">{locale==='uk'?'Попередній перегляд недоступний.':'Quick preview is unavailable.'}</p>}
-    {data&&<><div className="dialog-cover"><DocumentCover url={data.cover_preview_url} locale={locale} backendOrigin={backendOrigin}/></div><p>{data.summary}</p>
+    {busy&&<LoadingIndicator locale={locale} compact/>}{error&&<p role="alert">{locale==='uk'?'Попередній перегляд недоступний.':'Quick preview is unavailable.'}</p>}
+    {data&&<><div className="dialog-cover">{(()=>{const source=getPreviewSource(data.cover_preview_url,backendOrigin);return source?<DocumentLightbox locale={locale} pages={[{src:source.src,unoptimized:source.unoptimized,width:640,height:860,label:data.title}]}><DocumentCover url={data.cover_preview_url} locale={locale} backendOrigin={backendOrigin}/><span className="preview-expand-caption">{locale==='uk'?'Збільшити прев’ю ↗':'View larger ↗'}</span></DocumentLightbox>:<DocumentCover url={data.cover_preview_url} locale={locale} backendOrigin={backendOrigin}/>})()}</div><p>{data.summary}</p>
      <p className="formats">{locale==='uk'?'Ліцензія':'License'}: {data.license_code}</p>
      <div className="quick-preview-actions"><Link href={localizedPath(locale,`/templates/${data.slug}`)} className="button-link">{t.fullDetails}</Link>
       {data.formats.map(file=>{const url=getDownloadUrl(file,data.slug,backendOrigin);return url?<a key={file.id} className="outline-link" href={url} rel="noopener noreferrer">{t.download} {file.format.toUpperCase()}</a>:null})}</div></>}

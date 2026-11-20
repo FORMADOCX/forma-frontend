@@ -69,3 +69,14 @@ Related templates on Detail are fetched from the **same published category** via
 
 ## Admin-only MVP (v0.8.5)
 The former Community Submission strip is removed. Keep Homepage hero/category/featured geometry unchanged; do not show a decorative upload CTA. Only genuine Django document previews belong in the catalog.
+
+## v0.8.6 interaction refinements
+
+- Browser brand icon: App Router `src/app/icon.svg` and PNG companions.
+- Search magnifier is a real form submit control, also accessible with keyboard.
+- Featured sections are not rendered when their API result is empty; errors remain distinguishable.
+- Skip link appears on keyboard focus only.
+- `DocumentLightbox` reuses trusted Django preview sources in native modal dialogs, with pagination and magnification up to 300%; source resolution limits actual fidelity.
+- `LoadingIndicator` is used for route and Quick Preview loading states.
+- Catalog selects remain native. Pagination links preserve query and filter parameters.
+- Hover image scale 1.03, 250ms; all animations disabled or reduced under reduced-motion preferences.

@@ -1,3 +1,10 @@
+## 0.8.6 — UI/UX polish
+
+- Browser icons, clickable search icon, conditional featured sections, skip-to-content keyboard behavior.
+- Real document lightbox with page navigation, native dialog, scroll lock and zoom; shared in Quick Preview and Detail.
+- Shared loading state, unified native selects, numbered pagination, pointer states, subtle image zoom with reduced-motion support.
+- API contracts, SEO/indexing, EN/UK and Admin-Only Publishing unchanged.
+
 # Changelog
 
 Historical release notes below describe earlier implementations; **the current v0.8.5 MVP is Admin-Only Publishing**. Older Community Submission work is retained for historical context only and is not shipped in the current public UI.

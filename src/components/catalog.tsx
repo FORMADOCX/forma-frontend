@@ -5,6 +5,7 @@ import {localizedPath,dictionary,type Locale} from '@/lib/i18n';
 import {TemplateCard} from './template-card';
 import {PageIntro} from './site-shell';
 import {CatalogFilters} from './catalog-filters';
+import {CatalogPagination} from './catalog-pagination';
 
 export async function Catalog({locale,query={},search=false,fixedCategory,embedded=false}:{locale:Locale;query?:RawQuery;search?:boolean;fixedCategory?:string;embedded?:boolean}){
  const t=dictionary[locale];const params=parseCatalogQuery(query);
@@ -39,7 +40,7 @@ export async function Catalog({locale,query={},search=false,fixedCategory,embedd
     {failure?<div role="alert" className="empty-state"><p>{failure instanceof ApiError&&failure.status===429?(locale==='uk'?'Забагато запитів. Спробуйте пізніше.':'Too many requests. Please try again later.'):failure instanceof ApiError&&failure.status===400?(locale==='uk'?'Некоректні параметри фільтрації. Очистіть фільтри та спробуйте знову.':'Invalid filter parameters. Clear filters and try again.'):failure instanceof ApiError&&failure.status===404?(locale==='uk'?'Сторінку результатів не знайдено.':'Results page not found.'):locale==='uk'?'Не вдалося завантажити каталог.':'Could not load the catalog.'}</p>{<Link href={catalogHref(base,{...params,page:1,format:'',rawFormat:[],attributes:{},rawAttributes:{}})}>{locale==='uk'?'Очистити фільтри':'Clear filters'}</Link>}</div>:
     !items?.results.length?<div role="status" className="empty-state"><p>{locale==='uk'?'За цими умовами немає шаблонів.':'No published templates match these filters.'}</p><Link href={catalogHref(base,{...params,page:1,format:'',rawFormat:[],attributes:{},rawAttributes:{}})}>{locale==='uk'?'Очистити фільтри':'Clear filters'}</Link></div>:
     <><p className="result-count">{locale==='uk'?'Знайдено':'Results'}: {items.count}</p><div className="template-grid">{items.results.map(item=><TemplateCard key={item.id} template={item} locale={locale}/>)}</div>
-    <nav className="pagination" aria-label="Pagination">{items.previous&&<Link href={catalogHref(base,params,{page:params.page-1})}>{locale==='uk'?'Попередня':'Previous'}</Link>}<span>{locale==='uk'?'Сторінка':'Page'} {params.page}</span>{items.next&&<Link href={catalogHref(base,params,{page:params.page+1})}>{locale==='uk'?'Наступна':'Next'}</Link>}</nav></>}
+    <CatalogPagination base={base} params={params} count={items.count} locale={locale}/></>}
    </div>
   </div>
  </div>;

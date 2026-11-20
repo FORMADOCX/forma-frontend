@@ -1,3 +1,7 @@
+## Frontend v0.8.6 UI polish (2026-11-20)
+
+Implemented a minimal branded SVG/PNG icon set, functional header search icon, hidden empty featured sections, keyboard-only skip link, shared accessible document lightbox (real Django images only), loading indicator, native select styling, numbered URL-preserving pagination, interactive cursors, and image hover zoom. Admin-only publishing, EN/UK, noindex, CMS, backend API, and Next.js App Router maintained. Browser QA and live Django integration must be confirmed independently.
+
 # FORMA Frontend — Development Context
 
 Updated: 2026-11-18. Version: v0.6.0 dynamic catalogue filters. NOT production-ready.

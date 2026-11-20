@@ -1,2 +1,3 @@
+import {LoadingIndicator} from '@/components/loading-indicator';
 import {SiteShell} from '@/components/site-shell';
-export default function Loading(){return <SiteShell locale="en"><div className="container page-content" role="status">Loading…</div></SiteShell>}
+export default function Loading(){return <SiteShell locale="en"><div className="container page-content"><LoadingIndicator locale="en"/></div></SiteShell>}
