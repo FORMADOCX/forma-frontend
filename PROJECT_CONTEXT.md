@@ -1,10 +1,6 @@
-## Current homepage enhancement — v0.8.9 source-based patch (2026-11-21)
+### Homepage workflow refinement — 2026-11-21
 
-**Source of truth:** User-provided `forma-frontend.zip` (package version `0.8.9`). Previous proposed v0.9.0 homepage redesign is rejected and was NOT reused. Approved homepage: two-column hero with `public/images/forma-hero.webp`, unchanged H1/description/Search and hero category links; left-intro/right-card Featured Categories; same five-card Featured Templates; existing header/footer/mobile nav.
-
-**Implemented:** Featured Categories exclusively use server-side `getHomepageCategories(lang)` with `homepage=true`, 60-second existing API cache, safe pagination, optional backend `icon` and `show_on_homepage` fields, stable API order, deduplication, show-on-homepage flag validation and no fallback to all categories. Five existing card slots retained, optional approved local SVG icon at left, small All Categories link when more than five enabled. Hero links intentionally continue using original general category listing so their data source and behavior do not change. One compact localized `Find. Preview. Download.` editorial section added below Featured Templates; template cards and API logic unchanged. No new dependencies; staging noindex, localization and document variants remain untouched.
-
-**QA:** 178/178 Node tests passed (with existing global TypeScript via NODE_PATH), structure check passed, 77 TS/TSX files parsed with no syntax errors. Offline npm install failed ENOTCACHED on `yocto-queue`; full typecheck/lint/build and browser testing remain unverified. External staging Django categories endpoint could not be reached; integration must verify `icon`/`show_on_homepage` in live response and that all category pages remain correctly linked. Deploy via Vercel Preview first; rollback to previously successful deployment if visual/API QA fails.
+The `Find. Preview. Download.` explanatory section was visually replaced with a split editorial experience: pale neutral left intro with a functional `/templates` link, and three clearly sequenced steps on the right. Text is localized EN/UK and layout stacks below 800px. No Hero, CMS categories, cards, navigation, APIs, metadata, or backend changes. Current app version remains 0.8.9; no incompatible release change. Visual browser QA and production build must be separately verified before acceptance.
 
 ## v0.8.8 — Catalog filters, sorting and URL contract (2026-11-21)
 
@@ -329,9 +325,9 @@ Checks here: `npm test` 28/28 passed, `npm run check:structure` passed. `npm run
 - **Open:** actual Backend v0.8.5 variant payload and default/preview fields could not be verified from this environment; see docs/DOCUMENT_VARIANTS.md. Browser download failures cannot be intercepted reliably with ordinary native links.
 - **Validation:** 171 tests passed using installed global TypeScript via temporary NODE_PATH, strict pure-helper TypeScript typecheck passed, structure check passed. Complete dependency installation, Next.js typecheck/lint/build and staging E2E could not be confirmed due unavailable registry package.
 
-## Homepage visual regression correction (2026-11-21)
-- Baseline: user-supplied frontend v0.8.9 with CMS-controlled homepage categories; approved hero with `public/images/forma-hero.webp` remains intact.
-- Homepage template grid now uses the actual count of available published cards (maximum four) rather than five fixed narrow columns; homepage-only CSS improves the editorial spacing and hierarchy of the three-step explanation.
-- `DocumentCover` now responds to remote PNG failures with a text-only unavailable state; it does **not** invent or synthesize previews. Browser requests for validated public Django preview URLs bypass Next image optimization, which may otherwise fail at its server-side proxy; actual network failures still require backend investigation.
-- Missing/unavailable optional homepage categories do not produce a detached error sentence below the sections. Failures are logged on the server. CMS visibility still solely follows `homepage=true` and `show_on_homepage`.
-- Pending: staging API investigation for broken thumbnails and empty CMS homepage categories, screenshot comparison at 390/768/1440 px, confirmation of successful production build in environment with Linux SWC binary.
+## Homepage CMS enhancement (2026-11-21)
+- Baseline: user-provided `forma-frontend.zip`, package version 0.8.9; preserve established layout.
+- CMS homepage categories requested separately with homepage=true and show_on_homepage=true; no fallback to general category results.
+- The original hero uses general category links, intentionally preserved; they do not represent CMS featured categories.
+- Added compact localized Find. Preview. Download. section and optional approved CMS icons.
+- Backend live staging/visual browser QA remains to be verified.

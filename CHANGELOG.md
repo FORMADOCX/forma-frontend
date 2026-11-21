@@ -1,9 +1,9 @@
-## v0.8.9 — Homepage CMS category enhancement (2026-11-21)
-- Preserved the attached v0.8.9 homepage layout, hero image, search, existing hero category links, existing Featured Templates cards/Quick Preview, Header, Footer and mobile navigation.
-- Added server-only `getHomepageCategories(lang)`: calls `GET /api/v1/categories/?homepage=true`, follows validated Django pagination URLs, deduplicates records, and renders only `show_on_homepage === true`. An empty result hides the entire Featured Categories section; no generic endpoint fallback.
-- Kept the existing five-card `home-category-grid` and category link design; inserted optional icons from a safe local 16-key registry and an understated All Categories link when the enabled list exceeds five.
-- Added exactly one compact EN/UK “Find. Preview. Download.” section after Featured Templates. New CSS is scoped to icons and this section; no hero/card/header/footer restyling or API schema changes beyond optional Category fields.
-- Validation: 178/178 Node tests passed, structure guard passed, 77 TS/TSX syntax files parsed without diagnostics. `npm ci --offline` failed ENOTCACHED (`yocto-queue`); full lint/typecheck/build and browser QA not verified. Live Django staging response was inaccessible from the current environment; ensure flag is included in public Category serialization.
+## Homepage editorial workflow refresh (2026-11-21)
+
+- Replaced only the former `Find. Preview. Download.` inline text strip with a substantial editorial split-panel process section: serif introduction, functional localized catalog link, ordered three-row workflow.
+- Preserved homepage Hero, original image, CMS categories, Featured Templates, TemplateCard, header/footer, and all backend API calls.
+- Improved readability, vertical rhythm, semantic ordered steps, mobile stacking and accessible focus states. EN/UK copy updated for the new presentation.
+- No dependency or API changes. See `docs/HOMEPAGE_WORKFLOW.md` for reviewed reference directions and validation caveats.
 
 ## v0.8.8 — ESLint test hotfix (2026-11-21)
 - Fix `@next/next/no-assign-module-variable` in the mobile experience test without changing behavior.
@@ -261,10 +261,7 @@ Historical release notes below describe earlier implementations; **the current v
 - Added regression tests and integration notes in `docs/DOCUMENT_VARIANTS.md`; no backend/API, auth, routing, SEO or dependency changes.
 - Deployed Backend v0.8.5 contract and end-to-end download verification remain outstanding in this packaging environment.
 
-### v0.8.9 — Homepage editorial refinement (visual regression correction)
-- Kept the approved two-column hero, artwork, search, categories, shared template cards, header/footer and mobile navigation.
-- Made the Featured Templates grid respond to 1–4 **real** templates, rather than leaving two tiny cards in a five-column layout; refined only homepage spacing, card typography and the compact three-step section.
-- Added an accessible text fallback for real preview images that fail to load. The known/trusted Django preview image is loaded directly (without Next.js image proxy), preserving the existing strict origin/path validation.
-- Optional homepage collection fetch failures are logged server-side rather than rendered as distracting orphan messages below the content. Empty CMS categories still hide the section.
-- No changes to backend API, search, template downloads, Quick Preview, SEO, or locale routes.
-- Visual browser review with a live Django staging backend remains outstanding.
+## 0.8.9 — Homepage CMS category enhancement (2026-11-21)
+- Preserved provided 0.8.9 hero, image, search, featured template cards, header, footer and navigation.
+- Featured Categories now uses CMS-only `homepage=true` endpoint, verified visibility and backend order, paginated safely; decorative icon registry is allowlisted.
+- Added one compact localized Find / Preview / Download section after featured templates. No Recently Added or homepage redesign.

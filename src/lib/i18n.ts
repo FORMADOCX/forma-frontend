@@ -7,7 +7,7 @@ export function localizedPath(locale: Locale, path = '/') {
 }
 export const dictionary = {
   en: {
-    howTitle: 'Find. Preview. Download.', howDescription: 'A simple way to find the right document and start working.', howFind: 'Find', howFindText: 'Search templates or browse categories.', howPreview: 'Preview', howPreviewText: 'Review the document before downloading.', howDownload: 'Download', howDownloadText: 'Choose an available format and get your file.', allCategories: 'All categories',
+    howEyebrow: 'THE FORMA METHOD', howTitle: 'The right document. A simpler way.', howText: 'Explore with confidence, see the document before you commit, and choose the file that works for you.', howExplore: 'Explore all templates', howFind: 'Find', howFindText: 'Search templates or browse categories.', howPreview: 'Preview', howPreviewText: 'Review the document before downloading.', howDownload: 'Download', howDownloadText: 'Choose an available format and get your file.', allCategories: 'All Categories',
     templates: 'All templates', categories: 'Categories',
     search: 'Search', searchPlaceholder: 'Search document templates',
     homeTitle: 'Documents worth using.',
@@ -24,7 +24,7 @@ export const dictionary = {
     pageNotFound: 'Page not found', back: 'Back to homepage',
   },
   uk: {
-    howTitle: 'Знайдіть. Перегляньте. Завантажте.', howDescription: 'Простий спосіб знайти потрібний документ і почати роботу.', howFind: 'Знайдіть', howFindText: 'Шукайте шаблони або переглядайте категорії.', howPreview: 'Перегляньте', howPreviewText: 'Ознайомтеся з документом перед завантаженням.', howDownload: 'Завантажте', howDownloadText: 'Виберіть доступний формат і отримайте файл.', allCategories: 'Усі категорії',
+    howEyebrow: 'ЯК ПРАЦЮЄ FORMA', howTitle: 'Потрібний документ. Простий шлях.', howText: 'Знайдіть шаблон, перегляньте документ перед вибором і завантажте потрібний формат.', howExplore: 'Переглянути всі шаблони', howFind: 'Знайдіть', howFindText: 'Шукайте шаблони або переглядайте категорії.', howPreview: 'Перегляньте', howPreviewText: 'Ознайомтеся з документом перед завантаженням.', howDownload: 'Завантажте', howDownloadText: 'Виберіть доступний формат і отримайте файл.', allCategories: 'Усі категорії',
     templates: 'Усі шаблони', categories: 'Категорії',
     search: 'Пошук', searchPlaceholder: 'Пошук шаблонів документів',
     homeTitle: 'Документи, якими зручно користуватися.',

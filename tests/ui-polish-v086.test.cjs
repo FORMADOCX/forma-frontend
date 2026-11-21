@@ -17,10 +17,10 @@ test('search magnifier is a real submit button; enter uses identical form action
  assert.doesNotMatch(s,/<span aria-hidden="true" className="search-magnifier"/);
 });
 test('featured sections are conditional and error states remain distinct',()=>{
- const s=read('src/components/pages.tsx');assert.match(s,/actualCategories.length>0&&<section className="section section-border home-categories"/);
- assert.match(s,/actualTemplates.length>0&&<section className=\{`section section-border home-featured/);
- assert.match(s,/console.error\('\[FORMA homepage\] Featured templates request failed/);
- assert.match(s,/console.error\('\[FORMA homepage\] CMS homepage categories request failed/);
+ const s=read('src/components/pages.tsx');assert.match(s,/featuredCategories.length>0&&<section className="section section-border home-categories"/);
+ assert.match(s,/actualTemplates.length>0&&<section className="section section-border home-featured"/);
+ assert.match(s,/templates.status==='rejected'&&<p role="alert"/);
+ assert.match(s,/categories.status==='rejected'&&<p role="alert"/);
 });
 test('skip-to-content is keyboard-revealed and targets main',()=>{
  const shell=read('src/components/site-shell.tsx'),css=read('src/app/globals.css');assert.match(shell,/href="#content" className="skip-link"/);assert.match(shell,/<main id="content" tabIndex=\{-1\}>/);

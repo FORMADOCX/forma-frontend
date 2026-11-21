@@ -26,38 +26,31 @@ async function read<T>(path:string,query:Record<string,string|number|undefined|s
 }
 const slugSegment=(slug:string)=>encodeURIComponent(slug);
 export const getCategories=(lang:Language,page=1,page_size=100)=>read<Page<Category>>('categories/',{lang,page,page_size});
-
-/** Read only categories explicitly enabled for homepage display; follow Django pagination. */
+/** Fetch every CMS-enabled homepage category in backend order, without trusting pagination URLs. */
 export async function getHomepageCategories(lang:Language):Promise<Category[]> {
  const results:Category[]=[];
- const seenPages=new Set<number>();
  const seenIds=new Set<string>();
+ const visited=new Set<number>();
  let page=1;
- while (!seenPages.has(page)) {
-  seenPages.add(page);
+ while (!visited.has(page)) {
+  visited.add(page);
   const batch=await read<Page<Category>>('categories/',{lang,homepage:'true',page,page_size:100});
   for (const category of batch.results) {
    if (category.show_on_homepage===true && !seenIds.has(category.id)) {
-    seenIds.add(category.id);
-    results.push(category);
+    seenIds.add(category.id);results.push(category);
    }
   }
   if (!batch.next) break;
-  // Only follow the next page on the same known endpoint; never fetch an untrusted URL.
   let next:URL;
-  try {next=new URL(batch.next,endpoint('categories/'));} catch {throw new ApiError(502,'Invalid categories pagination URL');}
+  try {next=new URL(batch.next,endpoint('categories/'));}
+  catch {throw new ApiError(502,'Invalid homepage categories pagination');}
   const expected=new URL(endpoint('categories/'));
   const nextPage=Number(next.searchParams.get('page'));
-  if (next.origin!==expected.origin || next.pathname!==expected.pathname ||
-      next.searchParams.get('homepage')!=='true' || next.searchParams.get('lang')!==lang ||
-      !Number.isSafeInteger(nextPage) || nextPage<=page) {
-   throw new ApiError(502,'Invalid categories pagination URL');
-  }
+  if(next.origin!==expected.origin || next.pathname!==expected.pathname || next.searchParams.get('homepage')!=='true' || next.searchParams.get('lang')!==lang || !Number.isSafeInteger(nextPage) || nextPage<=page) throw new ApiError(502,'Invalid homepage categories pagination');
   page=nextPage;
  }
  return results;
 }
-
 export const getCategory=(slug:string,lang:Language)=>read<Category>(`categories/${slugSegment(slug)}/`,{lang});
 export const getTemplates = async (query: CatalogQuery): Promise<Page<TemplateList>> => { const result = await read<Page<TemplateList>>('templates/', {
  lang:query.lang,page:query.page,page_size:query.page_size,category:query.category,q:query.q,sort:query.sort,format:query.format,
