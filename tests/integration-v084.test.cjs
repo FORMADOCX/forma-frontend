@@ -93,7 +93,7 @@ test('CMS footer still verifies detail-only flag, with bounded concurrency and c
 test('no regression to Next.js 15 dynamic routes, feature-flag indexing or PostCSS override',()=>{
  const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));
  assert.equal(pkg.overrides.next.postcss,'8.5.23');
- assert.equal(pkg.version,'0.9.0');
+ assert.equal(pkg.version,'0.8.9');
  assert.match(fs.readFileSync('src/app/(en)/categories/[slug]/page.tsx','utf8'),/searchParams/);
  assert.match(fs.readFileSync('src/app/(uk)/uk/categories/[slug]/page.tsx','utf8'),/searchParams/);
  assert.match(fs.readFileSync('src/lib/seo.ts','utf8'),/indexingEnabled = false/);

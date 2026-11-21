@@ -14,13 +14,15 @@ test('public header has navigation, search, locale switch and no customer authen
  assert.doesNotMatch(src,/Sign In|Log In|Register|Create Account|login\/|register\/|account dropdown/i);
 });
 
-test('homepage uses live CMS selection and text-first hero, without synthetic cards',()=>{
+test('homepage featured data derive from live catalog and hero uses a separate editorial artwork',()=>{
  const src=read('src/components/pages.tsx');
- assert.match(src,/getHomepageCategories\(locale\)/);
- assert.match(src,/getTemplates\(\{lang:locale,page:1,page_size:8,sort:'newest'\}\)/);
- assert.doesNotMatch(src,/forma-hero\.webp|mockTemplates|placeholder\.png/);
- assert.match(src,/homepageCollections\(templates\)/);
- assert.match(src,/<SearchSection locale=\{locale\}\/>/);
+ assert.match(src,/getTemplates\(\{lang:locale,page_size:8\}\)/);
+ assert.match(src,/getCategories\(locale,1,8\)/);
+ assert.match(src,/\/images\/forma-hero\.webp/);
+ assert.doesNotMatch(src,/showcase\.cover_preview_url/);
+ assert.match(src,/actualCategories\.slice\(0,5\)/);
+ assert.match(src,/actualTemplates\.slice\(0,5\)/);
+ assert.doesNotMatch(src,/placeholder\.png|fake-templates|mockTemplates/);
 });
 
 test('template card links real preview, details and preserved live Quick Preview',()=>{
@@ -67,6 +69,6 @@ test('responsive styles contain all requested breakpoints with no forced horizon
 test('SEO indexing config and PostCSS override are preserved',()=>{
  const pkg=JSON.parse(read('package.json'));
  assert.equal(pkg.overrides.next.postcss,'8.5.23');
- assert.equal(pkg.version,'0.9.0');
+ assert.equal(pkg.version,'0.8.9');
  assert.match(read('src/lib/seo.ts'),/indexingEnabled = false/);
 });

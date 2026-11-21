@@ -22,7 +22,7 @@ test('homepage and navigation contain no public submission CTA or links',()=>{
  const shell=read('src/components/site-shell.tsx');
  assert.doesNotMatch(homepage,/submit|submission|community-strip|Contribute to the Library|Долучіться до бібліотеки/i);
  assert.doesNotMatch(shell,/\/submit|t\.submit|dictionary\[locale\]\.submit/);
- assert.match(homepage,/getTemplates\(\{lang:locale,page:1,page_size:8,sort:'newest'\}\)/);
+ assert.match(homepage,/getTemplates\(\{lang:locale,page_size:8\}\)/);
  assert.match(shell,/headerLinks\.map/);
  assert.match(shell,/pages\.map/);
 });

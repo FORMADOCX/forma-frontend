@@ -1,13 +1,4 @@
 ## v0.8.8 — ESLint test hotfix (2026-11-21)
-
-## v0.9.0 — Homepage redesign & CMS-driven categories (2026-11-21)
-- Replaced image-heavy hero with compact text-first copy, maintained functional global search and EN/UK.
-- Added paginated, opt-in CMS homepage category query (`homepage=true`) with safe icon registry and order preservation; hide empty sections.
-- Featured and Recently Added reuse real published template cards and Quick Preview, with newest-based documented fallback, stable deduplication and suppressed small-catalog repetition.
-- Added compact Find / Preview / Download guidance, semantic headings, responsive desktop/tablet/mobile layout and localized homepage metadata.
-- No changes to backend, downloads, mobile navigation, SEO noindex, staging domains or public submission policy.
-- Added regressions. Live CMS contract and browser viewport testing require staging verification.
-
 - Fix `@next/next/no-assign-module-variable` in the mobile experience test without changing behavior.
 
 ## 0.8.8 — Catalog controls and backend attribute filtering (2026-11-21)

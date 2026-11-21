@@ -3,28 +3,36 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const read = file => fs.readFileSync(file,'utf8');
 
-test('CMS homepage categories use a trusted icon registry and not invented cards',()=>{
- const page=read('src/components/pages.tsx');
- assert.match(page,/getHomepageCategories\(locale\)/);
- assert.match(page,/categories\.map\(category=>/);
- assert.match(page,/<CategoryIcon name=\{category.icon\}\/>/);
+test('real published categories remain API driven with no fabricated category icons',()=>{
+ const page = read('src/components/pages.tsx');
+ assert.match(page,/getCategories\(locale,1,8\)/);
+ assert.match(page,/actualCategories\.slice\(0,5\)/);
+ assert.doesNotMatch(page,/category-symbol/);
  assert.match(page,/home-category-title/);
- assert.doesNotMatch(page,/mockCategories|category-symbol/);
- const icons=read('src/components/category-icons.tsx');
- assert.match(icons,/hasOwnProperty/);
+ const css=read('src/app/globals.css');
+ assert.match(css,/\.home-category-card\{background:#edf5ef/);
+ assert.match(css,/\.home-category-title\{[^}]*white-space:nowrap/);
 });
-test('compact text hero keeps real search and no promotional illustration',()=>{
+
+test('hero artwork remains optimized and independent of real document previews',()=>{
  const page=read('src/components/pages.tsx');
- assert.match(page,/<SearchSection locale=\{locale\}\/>/);
- assert.doesNotMatch(page,/<Image|forma-hero\.webp|community-strip|\/submit/);
- assert.match(page,/getTemplates\(\{lang:locale,page:1,page_size:8,sort:'newest'\}\)/);
+ const css=read('src/app/globals.css');
+ for(const asset of ['public/images/forma-hero.webp']){
+  assert.ok(fs.statSync(asset).size > 1000, `${asset} missing`);
+  assert.ok(fs.statSync(asset).size < 250000, `${asset} not optimized`);
+ }
+ assert.match(page,/<Image src="\/images\/forma-hero\.webp" alt="" fill priority/);
+ assert.doesNotMatch(page,/community-strip|\/submit/);
+ assert.doesNotMatch(css,/forma-contribute\.webp/);
+ assert.match(page,/getTemplates\(\{lang:locale,page_size:8\}\)/);
  assert.match(read('src/components/template-card.tsx'),/template\.cover_preview_url/);
 });
-test('hero search and listing CTA are available',()=>{
+
+test('hero search placeholder and template listing CTA match approved reference',()=>{
  const search=read('src/components/search-form.tsx');
  const page=read('src/components/pages.tsx');
- assert.match(search,/Search invoices, proposals, planners\.\.\./);
- assert.match(page,/t\.allTemplates/);
+ assert.match(search,/Search templates \(e\.g\., invoice, report, proposal\)/);
+ assert.match(page,/View All Templates/);
  assert.match(search,/method="get"/);
 });
 

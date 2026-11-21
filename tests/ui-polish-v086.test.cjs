@@ -17,10 +17,10 @@ test('search magnifier is a real submit button; enter uses identical form action
  assert.doesNotMatch(s,/<span aria-hidden="true" className="search-magnifier"/);
 });
 test('featured sections are conditional and error states remain distinct',()=>{
- const s=read('src/components/pages.tsx');assert.match(s,/categories.length>0&&<section className="section section-border home-categories"/);
- assert.match(s,/featured.length>0&&<section className="section section-border home-featured"/);
- assert.match(s,/templateResult.status==='rejected'&&<p role="status"/);
- assert.match(s,/categoryResult.status==='rejected'&&<p role="status"/);
+ const s=read('src/components/pages.tsx');assert.match(s,/actualCategories.length>0&&<section className="section section-border home-categories"/);
+ assert.match(s,/actualTemplates.length>0&&<section className="section section-border home-featured"/);
+ assert.match(s,/templates.status==='rejected'&&<p role="alert"/);
+ assert.match(s,/categories.status==='rejected'&&<p role="alert"/);
 });
 test('skip-to-content is keyboard-revealed and targets main',()=>{
  const shell=read('src/components/site-shell.tsx'),css=read('src/app/globals.css');assert.match(shell,/href="#content" className="skip-link"/);assert.match(shell,/<main id="content" tabIndex=\{-1\}>/);
@@ -60,5 +60,5 @@ test('interactive cursor and isolated image zoom respect reduced motion',()=>{
 test('publishing stays admin only, no backend contract changed',()=>{
  const s=read('src/components/site-shell.tsx');assert.doesNotMatch(s,/\/submit|SubmissionForm/);
  for(const p of ['src/app/(en)/submit/page.tsx','src/app/(uk)/uk/submit/page.tsx'])assert.match(read(p),/notFound\(\)/);
- assert.equal(JSON.parse(read('package.json')).version,'0.9.0');
+ assert.equal(JSON.parse(read('package.json')).version,'0.8.9');
 });
