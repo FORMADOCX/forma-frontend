@@ -9,7 +9,8 @@ test('public header has navigation, search, locale switch and no customer authen
  assert.match(src,/\/templates/);assert.match(src,/\/categories/);assert.doesNotMatch(src,/localizedPath\(locale,\s*['"]\/about['"]\)/);
  assert.match(src,/<SearchForm locale=\{locale\} compact\/>/);
  assert.match(src,/<LocaleSwitch locale=\{locale\}\/>/);
- assert.match(src,/mobile-navigation/);
+ assert.doesNotMatch(src,/<details className="mobile-navigation">/);
+ assert.match(src,/<MobileBottomNavigation locale={locale}\/>/);
  assert.doesNotMatch(src,/Sign In|Log In|Register|Create Account|login\/|register\/|account dropdown/i);
 });
 

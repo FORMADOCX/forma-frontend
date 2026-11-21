@@ -65,7 +65,7 @@ test('pagination, deduplication, and six-at-a-time detail batches',async()=>{
  const menus=await plain(await getCmsNavigation('en'));
  assert.equal(menus.headerLinks.length,9);assert.equal(calls.detail.length,9);assert.equal(calls.list.length,2);
 });
-test('header renders CMS links in both desktop and mobile; footer renders independently',()=>{
+test('desktop header renders CMS links; mobile has no hamburger, footer renders independently',()=>{
  const jsxRuntime={jsx:(type,props)=>({type,props}),jsxs:(type,props)=>({type,props})};
  const source=fs.readFileSync(`${root}/src/components/site-shell.tsx`,'utf8');
  const js=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2022,esModuleInterop:true}}).outputText;
@@ -85,7 +85,7 @@ test('header renders CMS links in both desktop and mobile; footer renders indepe
   const cms=[{slug:'about',title:locale==='uk'?'Про нас':'About'}];
   const header=Header({locale,headerLinks:cms});
   const found=collect(header).filter(p=>p.children===cms[0].title);
-  assert.equal(found.length,2);assert.ok(found.every(p=>p.href===(locale==='uk'?'/uk/about':'/about')));
+  assert.equal(found.length,1);assert.ok(found.every(p=>p.href===(locale==='uk'?'/uk/about':'/about')));
   const footer=collect(Footer({locale,pages:cms})).filter(p=>p.children===cms[0].title);
   assert.equal(footer.length,1);
  }

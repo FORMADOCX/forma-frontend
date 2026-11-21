@@ -18,9 +18,6 @@ export function Header({locale,headerLinks=[]}:{locale:Locale;headerLinks?:CmsNa
   <div className="header-actions"><div className="header-search"><SearchForm locale={locale} compact/></div>
    <Suspense fallback={<span className="locale-switch" aria-hidden="true">EN / UK</span>}><LocaleSwitch locale={locale}/></Suspense>
   </div>
-  <details className="mobile-navigation"><summary aria-label={locale==='uk'?'Відкрити меню':'Open menu'}>{locale==='uk'?'Меню':'Menu'} <span aria-hidden="true">☰</span></summary>
-   <nav aria-label={locale==='uk'?'Додаткова навігація':'Additional navigation'}><Link href={localizedPath(locale,'/categories')}>{t.categories}</Link>{headerLinks.map(page=><Link key={page.slug} href={localizedPath(locale,`/${page.slug}`)}>{page.title}</Link>)}</nav>
-  </details>
  </div></header>
 }
 export function Footer({locale,pages=[]}:{locale:Locale;pages?:{slug:string;title:string}[]}){

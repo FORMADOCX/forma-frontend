@@ -33,5 +33,5 @@ test('locale and mobile navigation use custom styled dropdown surfaces while kee
  assert.match(locale,/localeDestination\(pathname,query,'en'\)/);
  assert.match(locale,/localeDestination\(pathname,query,'uk'\)/);
  const css=read('src/app/globals.css');
- for(const mark of ['.forma-select-menu','.forma-select-chevron','.forma-select-option','.locale-dropdown-menu','.mobile-navigation nav a:hover','@media(prefers-reduced-motion:reduce)'])assert.ok(css.includes(mark),mark);
+ for(const mark of ['.forma-select-menu','.forma-select-chevron','.forma-select-option','.locale-dropdown-menu','@media(prefers-reduced-motion:reduce)'])assert.ok(css.includes(mark),mark);
 });

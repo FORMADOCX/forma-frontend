@@ -1,3 +1,8 @@
+## v0.8.7 — Mobile navigation refinement (2026-11-21)
+- Removed hamburger menu from mobile header (links remain in footer).
+- Replaced active bottom-tab underline with a forest-green filled surface and white foreground.
+- No API, SEO or navigation route changes.
+
 ## 0.8.6 — Category and search breadcrumb refinement (2026-11-20)
 
 - Category Detail now displays only `Home / Current Category`, regardless of category depth, without an unnecessary parent-category API lookup.

@@ -286,3 +286,9 @@ Checks here: `npm test` 28/28 passed, `npm run check:structure` passed. `npm run
 - Verify on real devices: keyboard viewport resizing, scroll locking and access to bottom-sheet controls; automated browser QA is not claimed without execution.
 
 - Mobile UX release version: v0.8.7 (based on v0.8.6 plus category/search breadcrumbs fixes).
+
+## Mobile header and bottom navigation refinement (2026-11-21)
+- Mobile hamburger `<details>` was removed from public Header at the user's request; primary mobile navigation is the three-item Home / Templates / Search bottom bar.
+- Category and CMS navigation remains available through the existing localized footer; desktop header CMS links unchanged. This is a deliberate mobile discoverability tradeoff.
+- Selected bottom navigation item now has solid forest-green `var(--accent)` background with white text/icons, replacing the underline. `aria-current=page` and focus affordances remain.
+- No backend, SEO, routing or publishing changes. Browser QA remains outstanding until verified on devices.

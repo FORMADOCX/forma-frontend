@@ -32,13 +32,13 @@ test('bottom navigation has exactly three real localized Next Links and active i
  assert.match(nav,/localizedPath\(locale,'\/search'\)/);
  assert.match(shell,/<MobileBottomNavigation locale=\{locale\}\/>/);
 });
-test('mobile header leaves Categories/CMS links but does not duplicate bottom navigation',()=>{
- const menu=shell.match(/<details className="mobile-navigation">([\s\S]*?)<\/details>/);
- assert.ok(menu);
- assert.match(menu[0],/categories/);
- assert.match(menu[0],/headerLinks\.map/);
- assert.doesNotMatch(menu[0],/localizedPath\(locale,'\/templates'\)/);
- assert.doesNotMatch(menu[0],/localizedPath\(locale,'\/search'\)/);
+test('mobile header has no hamburger menu; categories and CMS remain in the footer',()=>{
+ assert.doesNotMatch(shell,/<details className="mobile-navigation">/);
+ assert.doesNotMatch(shell,/<summary[^>]*Open menu/);
+ assert.match(shell,/<Footer locale={locale} pages={footerLinks}\/>/);
+ assert.match(shell,/<Link href={localizedPath\(locale,'\/categories'\)}>{dictionary\[locale\]\.categories}<\/Link>/);
+ assert.match(shell,/pages\.map\(page=>/);
+ assert.match(shell,/<MobileBottomNavigation locale={locale}\/>/);
 });
 test('bottom navigation is mobile-only, respects iPhone safe area and reserves content space',()=>{
  assert.match(css,/\.mobile-bottom-navigation\{display:none\}/);
