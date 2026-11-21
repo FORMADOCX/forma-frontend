@@ -50,6 +50,6 @@ test('backend CMS flags, EN/UK, filter and download logic remain wired',()=>{
  assert.match(shell,/headerLinks=\{headerLinks\}/);
  assert.match(shell,/pages=\{footerLinks\}/);
  assert.match(read('src/components/catalog.tsx'),/getFilters|filters/i);
- assert.match(read('src/components/catalog-data-pages.tsx'),/getDownloadUrl/);
+ assert.match(read('src/components/template-document-selection.tsx'),/getDownloadUrl/);
  for(const locale of ['en','uk'])assert.ok(fs.existsSync(locale==='en'?'src/app/(en)/templates/page.tsx':'src/app/(uk)/uk/templates/page.tsx'));
 });

@@ -36,10 +36,10 @@ test('template card links real preview, details and preserved live Quick Preview
 test('detail binds real gallery pages, attributes and controlled download URLs',()=>{
  const src=read('src/components/catalog-data-pages.tsx');
  const gallery=read('src/components/document-gallery.tsx');
- assert.match(src,/previews=\{item\.previews\?\?\[\]\}/);
- assert.match(src,/getDownloadUrl\(file,item.slug,backendOrigin\)/);
+ assert.match(src,/<SelectedDocumentGallery item=\{item\}/);
+ assert.match(src,/<DocumentDownloadSelector item=\{item\}/);
  assert.match(src,/item\.attributes\.map/);
- assert.match(src,/firstDownload\?\.url/);
+ assert.match(src,/availableFiles/);
  assert.doesNotMatch(src,/<QuickPreview slug=\{item.slug\}/);
  assert.match(gallery,/groupDocumentPreviews\(previews,formats\)/);
  assert.match(gallery,/getPreviewSource\(p\.url,backendOrigin\)/);
@@ -69,6 +69,6 @@ test('responsive styles contain all requested breakpoints with no forced horizon
 test('SEO indexing config and PostCSS override are preserved',()=>{
  const pkg=JSON.parse(read('package.json'));
  assert.equal(pkg.overrides.next.postcss,'8.5.23');
- assert.equal(pkg.version,'0.8.8');
+ assert.equal(pkg.version,'0.8.9');
  assert.match(read('src/lib/seo.ts'),/indexingEnabled = false/);
 });

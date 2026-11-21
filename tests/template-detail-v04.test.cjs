@@ -35,7 +35,7 @@ test('production rejects local alias and accepts exact HTTPS backend',()=>{
 });
 test('detail uses actual DTO previews/downloads and compact Quick Preview preserved',()=>{
  const detail=fs.readFileSync('src/components/catalog-data-pages.tsx','utf8');const quick=fs.readFileSync('src/components/quick-preview.tsx','utf8');const gallery=fs.readFileSync('src/components/document-gallery.tsx','utf8');
- assert.match(detail,/item\.usage_instructions/);assert.match(detail,/getDownloadUrl\(file,item\.slug,backendOrigin\)/);
+ assert.match(detail,/item\.usage_instructions/);assert.match(detail,/<DocumentDownloadSelector item=\{item\}/);
  assert.match(gallery,/getPreviewSource\(page\.url,backendOrigin\)/);assert.match(gallery,/ArrowRight/);assert.match(gallery,/aria-live="polite"/);
  assert.doesNotMatch(quick,/<DocumentGallery/);assert.doesNotMatch(quick,/usage_instructions/);
 });

@@ -311,3 +311,12 @@ Checks here: `npm test` 28/28 passed, `npm run check:structure` passed. `npm run
 - Renamed the local CommonJS VM `module` variable to `compiledModule` in `tests/mobile-experience-v086.test.cjs` to avoid `@next/next/no-assign-module-variable`.
 - No application source, API contract, UI, or dependencies changed.
 - 154/154 tests and structure checks passed in packaging environment with global TypeScript resolution; full ESLint/typecheck/build not verified because `npm ci --offline` lacks cached `yocto-queue`.
+
+## Frontend v0.8.9 — document variants (2026-11-21)
+- Based on v0.8.8-lint-fix. Kept Admin-Only Publishing, Next.js/Django separation, EN/UK, mobile bottom navigation, catalog controls and staging noindex.
+- Added optional `TemplateDetail.variants` DTO and validated nested download URLs against the existing public Django origin and exact file-download route. Legacy `formats` remain supported.
+- Added shared client selection context connecting the existing gallery to compact native-radio variant/file selection with one primary Download action. No new API calls and no per-variant SEO routes.
+- Existing `DocumentGallery` / `DocumentLightbox` reused; selected-file images are chosen only by reliable `file_id` mapping. No fabricated image fallback.
+- Added tests covering format/size combinations, stable selection, unavailable files, localization, controlled URLs and unchanged site architecture.
+- **Open:** actual Backend v0.8.5 variant payload and default/preview fields could not be verified from this environment; see docs/DOCUMENT_VARIANTS.md. Browser download failures cannot be intercepted reliably with ordinary native links.
+- **Validation:** 171 tests passed using installed global TypeScript via temporary NODE_PATH, strict pure-helper TypeScript typecheck passed, structure check passed. Complete dependency installation, Next.js typecheck/lint/build and staging E2E could not be confirmed due unavailable registry package.

@@ -9,9 +9,10 @@ export type AttributeDataType = 'text'|'number'|'boolean'|'single_select'|'multi
 export interface Attribute {code:string;label:string;data_type:AttributeDataType;value:string|number|boolean|string[]|null}
 export interface TemplateList {id:string;slug:string;title:string;summary:string;language:string;published_at:string;categories:CategorySummary[];cover_preview_url?:string|null}
 export interface DocumentFormat {id:string;format:string;filename:string;byte_size:number;download_url:string|null}
+export interface DocumentVariant {id:string;code:string;label?:string|null;page_size?:string|null;orientation?:string|null;is_default?:boolean;files:DocumentFormat[]}
 export interface DocumentPreview {file_id:string;page:number;width:number;height:number;url:string}
 export interface TemplateQuickPreview extends TemplateList {license_code:string;formats:DocumentFormat[]}
-export interface TemplateDetail extends TemplateQuickPreview {description:string;usage_instructions:string;previews:DocumentPreview[];attributes:Attribute[];seo:Seo|null}
+export interface TemplateDetail extends TemplateQuickPreview {description:string;usage_instructions:string;previews:DocumentPreview[];attributes:Attribute[];seo:Seo|null;variants?:DocumentVariant[]}
 export interface Page<T> {count:number;next:string|null;previous:string|null;results:T[]}
 export type FilterType = 'single_select' | 'multi_select' | 'boolean';
 export interface FilterOption {value:string;label:string;count:number}

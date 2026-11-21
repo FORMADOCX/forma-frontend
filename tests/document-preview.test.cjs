@@ -37,7 +37,7 @@ test('real image is wired into card, dialog and detail with no fabricated fallba
  assert.match(modal,/getPreviewSource\(data.cover_preview_url,backendOrigin\)/);
  assert.match(modal,/unoptimized=\{source.unoptimized\}/);
  const detail=fs.readFileSync('src/components/catalog-data-pages.tsx','utf8');
- assert.match(detail,/<DocumentGallery previews=\{item\.previews/);
+ assert.match(detail,/<SelectedDocumentGallery item=\{item/);
  const component=fs.readFileSync('src/components/document-cover.tsx','utf8');
  assert.match(component,/<Image/);
  assert.match(component,/unoptimized=\{source\.unoptimized\}/);

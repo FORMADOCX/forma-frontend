@@ -93,8 +93,16 @@ test('CMS footer still verifies detail-only flag, with bounded concurrency and c
 test('no regression to Next.js 15 dynamic routes, feature-flag indexing or PostCSS override',()=>{
  const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));
  assert.equal(pkg.overrides.next.postcss,'8.5.23');
- assert.equal(pkg.version,'0.8.8');
+ assert.equal(pkg.version,'0.8.9');
  assert.match(fs.readFileSync('src/app/(en)/categories/[slug]/page.tsx','utf8'),/searchParams/);
  assert.match(fs.readFileSync('src/app/(uk)/uk/categories/[slug]/page.tsx','utf8'),/searchParams/);
  assert.match(fs.readFileSync('src/lib/seo.ts','utf8'),/indexingEnabled = false/);
 });
+test('document variants remap only trusted selected file download routes and reject malicious file origins',()=>env({NODE_ENV:'production',FORMA_API_URL:'http://django:8000',NEXT_PUBLIC_API_URL:'https://api.forma.example'},()=>{
+ const good={id,format:'docx',filename:'invoice-a4.docx',byte_size:2048,download_url:`http://django:8000${download}`};
+ const wrong={...good,id:'bad-id',download_url:`https://external.example${download}`};
+ const result=normalizeTemplateUrls({slug:'invoice',title:'Invoice',formats:[],variants:[{id:'variant-a4',code:'a4',page_size:'a4',files:[good,wrong]}]});
+ assert.equal(result.variants[0].files[0].download_url,`https://api.forma.example${download}`);
+ assert.equal(result.variants[0].files[1].download_url,null);
+ assert.deepEqual(normalizeTemplateUrls({slug:'invoice',variants:[null,{id:'empty',code:'x',files:[null]}]}).variants,[{id:'empty',code:'x',files:[]}]);
+}));

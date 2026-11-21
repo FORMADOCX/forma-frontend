@@ -60,5 +60,5 @@ test('interactive cursor and isolated image zoom respect reduced motion',()=>{
 test('publishing stays admin only, no backend contract changed',()=>{
  const s=read('src/components/site-shell.tsx');assert.doesNotMatch(s,/\/submit|SubmissionForm/);
  for(const p of ['src/app/(en)/submit/page.tsx','src/app/(uk)/uk/submit/page.tsx'])assert.match(read(p),/notFound\(\)/);
- assert.equal(JSON.parse(read('package.json')).version,'0.8.8');
+ assert.equal(JSON.parse(read('package.json')).version,'0.8.9');
 });

@@ -8,9 +8,8 @@ import {PageIntro} from './site-shell';
 import type {Category,TemplateDetail} from '@/lib/api/types';
 import {Breadcrumbs} from './breadcrumbs';
 import {categoryBreadcrumbs,selectBreadcrumbCategory,templateBreadcrumbs} from '@/lib/breadcrumbs';
-import {DocumentGallery} from './document-gallery';
-import {getDownloadUrl} from '@/lib/download-url';
-import {displayFileSize} from '@/lib/document-gallery';
+import {TemplateDocumentSelection,SelectedDocumentGallery,DocumentDownloadSelector} from './template-document-selection';
+import {publicDocumentVariants} from '@/lib/document-selection';
 import {TemplateCard} from './template-card';
 import {formatAttributeValue} from '@/lib/attribute-value';
 import {getBrowserApiOrigin} from '@/lib/api/public-urls';
@@ -33,20 +32,19 @@ export async function TemplateDetailPage({locale,slug}:{locale:Locale;slug:strin
  const items=templateBreadcrumbs(locale,item.title,item.slug,chosenCategory);
  let related:Awaited<ReturnType<typeof getTemplates>>['results']=[];
  if(chosenCategory){try{const response=await getTemplates({lang:locale,category:chosenCategory.slug,page_size:5});related=response.results.filter(candidate=>candidate.slug!==item.slug).slice(0,4);}catch{/* Related content is optional. */}}
- const downloads=(item.formats??[]).map(file=>({file,url:getDownloadUrl(file,item.slug,backendOrigin)}));
- const firstDownload=downloads.find(entry=>entry.url);
+ const availableVariants=publicDocumentVariants(item,locale);
+ const availableFiles=availableVariants.flatMap(variant=>variant.files);
  return <article className="container page-content detail"><Breadcrumbs locale={locale} items={items} variant="detail"/>
-  <div className="detail-body"><div className="detail-gallery-column"><DocumentGallery previews={item.previews??[]} formats={item.formats??[]} locale={locale} backendOrigin={backendOrigin}/></div>
+  <TemplateDocumentSelection key={item.slug} item={item} locale={locale} backendOrigin={backendOrigin}><div className="detail-body"><div className="detail-gallery-column"><SelectedDocumentGallery item={item} locale={locale} backendOrigin={backendOrigin}/></div>
    <div className="detail-summary"><div className="detail-kicker">{item.categories.map(c=>c.name).join(' / ')}</div><h1>{item.title}</h1><p className="lead">{item.summary}</p>{fallback(locale,item.language)}
     {!!item.categories.length&&<div className="detail-tags" aria-label={locale==='uk'?'Категорії':'Categories'}>{item.categories.map(c=><Link key={c.slug} href={localizedPath(locale,`/categories/${c.slug}`)}>{c.name}</Link>)}</div>}
-    {item.formats.length>0&&<div className="mobile-detail-formats" aria-label={locale==='uk'?'Доступні формати':'Available formats'}>{[...new Set(item.formats.map(file=>file.format.toUpperCase()))].map(format=><span key={format}>{format}</span>)}</div>}
-    <div className="detail-actions">{firstDownload?.url?<a href={firstDownload.url} className="button-link detail-primary-download" rel="noopener noreferrer">↓ {locale==='uk'?'Завантажити шаблон':'Download Template'} ({firstDownload.file.format.toUpperCase()})</a>:<span className="preview-note">{locale==='uk'?'Завантаження наразі недоступне':'Download currently unavailable'}</span>}
-    </div>
-    <dl className="detail-specs"><div><dt>{locale==='uk'?'Формати':'Formats'}</dt><dd>{item.formats.length?[...new Set(item.formats.map(f=>f.format.toUpperCase()))].join(', '):'—'}</dd></div><div><dt>{locale==='uk'?'Файли':'Files'}</dt><dd>{item.formats.length}</dd></div><div><dt>{locale==='uk'?'Ліцензія':'License'}</dt><dd>{item.license_code}</dd></div>{item.attributes.map(a=>{const value=formatAttributeValue(a,locale);return value?<div key={a.code}><dt>{a.label}</dt><dd>{value}</dd></div>:null})}</dl>
-   </div></div>
+    {availableFiles.length>0&&<div className="mobile-detail-formats" aria-label={locale==='uk'?'Доступні формати':'Available formats'}>{[...new Set(availableFiles.map(file=>file.format.toUpperCase()))].map(format=><span key={format}>{format}</span>)}</div>}
+    <DocumentDownloadSelector item={item} locale={locale} backendOrigin={backendOrigin}/>
+    <dl className="detail-specs"><div><dt>{locale==='uk'?'Формати':'Formats'}</dt><dd>{availableFiles.length?[...new Set(availableFiles.map(f=>f.format.toUpperCase()))].join(', '):'—'}</dd></div><div><dt>{locale==='uk'?'Файли':'Files'}</dt><dd>{availableFiles.length}</dd></div><div><dt>{locale==='uk'?'Ліцензія':'License'}</dt><dd>{item.license_code}</dd></div>{item.attributes.map(a=>{const value=formatAttributeValue(a,locale);return value?<div key={a.code}><dt>{a.label}</dt><dd>{value}</dd></div>:null})}</dl>
+   </div></div></TemplateDocumentSelection>
   <nav className="detail-section-nav" aria-label={locale==='uk'?'Розділи документа':'Document sections'}><a href="#document-description">{locale==='uk'?'Опис':'Description'}</a><a href="#document-files">{locale==='uk'?'Файли':'What’s included'}</a><a href="#document-compatibility">{locale==='uk'?'Формати та сумісність':'Format & compatibility'}</a></nav>
   <div className="detail-content"><section id="document-description" className="detail-section"><h2>{locale==='uk'?'Опис':'Description'}</h2>{item.description?.trim()?<p className="document-description">{item.description}</p>:<p className="preview-note">{locale==='uk'?'Опис відсутній.':'No description provided.'}</p>}{item.usage_instructions?.trim()&&<><h3>{locale==='uk'?'Як використовувати':'How to use'}</h3><p className="document-description">{item.usage_instructions}</p></>}</section>
-   <section id="document-files" className="detail-section"><h2>{locale==='uk'?'Доступні файли':'Included files'}</h2>{!item.formats?.length?<p className="preview-note">{locale==='uk'?'Доступних файлів немає.':'No files available.'}</p>:<ul className="download-list">{item.formats.map(file=>{const url=getDownloadUrl(file,item.slug,backendOrigin);return <li key={file.id}><div><strong>{file.filename}</strong><span>{file.format.toUpperCase()} · {displayFileSize(file.byte_size)}</span></div>{url?<a href={url} className="outline-link" rel="noopener noreferrer" aria-label={`${locale==='uk'?'Завантажити':'Download'} ${file.filename}`}>{locale==='uk'?'Завантажити':'Download'} ↓</a>:<span className="preview-note">{locale==='uk'?'Недоступно':'Unavailable'}</span>}</li>})}</ul>}</section>
+   <section id="document-files" className="detail-section"><h2>{locale==='uk'?'Доступні файли':'Included files'}</h2>{!availableFiles.length?<p className="preview-note">{locale==='uk'?'Доступних файлів немає.':'No files available.'}</p>:<ul className="download-list">{availableFiles.map(file=><li key={file.id}><div><strong>{file.filename}</strong><span>{file.format.toUpperCase()}</span></div></li>)}</ul>}</section>
    <section id="document-compatibility" className="detail-section"><h2>{locale==='uk'?'Формати та сумісність':'Format & compatibility'}</h2><p>{locale==='uk'?'Завантажте доступний файл у зазначеному форматі та редагуйте його у сумісній програмі.':'Download an available document file in its listed format and edit it using compatible software.'}</p></section>
   </div>
   {related.length>0&&<section className="related-section section-border"><div className="section-heading"><h2>{locale==='uk'?'Схожі шаблони':'Related Templates'}</h2></div><div className="template-grid">{related.map(template=><TemplateCard key={template.id} template={template} locale={locale}/>)}</div></section>}

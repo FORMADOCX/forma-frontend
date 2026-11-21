@@ -246,3 +246,10 @@ Historical release notes below describe earlier implementations; **the current v
 - Removed redundant search fields from All Templates and Category Detail listings; the dedicated Search page and global/hero search stay unchanged.
 - Preserved incoming `q` values for existing filter URLs through hidden form state, without changing Django API requests.
 - Adjusted catalog control grid and added regression tests; no design changes outside the catalog control row.
+
+## 0.8.9 — Multi-format and multi-size downloads (2026-11-21)
+- Added optional Django document variants DTO, secure nested file URL normalization, and a single variant-aware Download action on Template Detail.
+- Introduced compact responsive radio selectors for actual variant and file choices; maintained legacy flat `formats` compatibility.
+- Synced DocumentGallery with the selected file ID, reusing real PNG previews and the existing fullscreen lightbox, with no fake previews.
+- Added regression tests and integration notes in `docs/DOCUMENT_VARIANTS.md`; no backend/API, auth, routing, SEO or dependency changes.
+- Deployed Backend v0.8.5 contract and end-to-end download verification remain outstanding in this packaging environment.

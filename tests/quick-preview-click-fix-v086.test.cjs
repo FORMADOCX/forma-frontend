@@ -32,8 +32,8 @@ test('quick preview retains accessible interactive buttons, links and Escape/Clo
 test('detail does not redundantly render quick preview, but retains gallery and download', () => {
  const source = read('src/components/catalog-data-pages.tsx');
  assert.doesNotMatch(source, /\bQuickPreview\b/);
- assert.match(source, /<DocumentGallery previews=\{item\.previews/);
- assert.match(source, /detail-primary-download/);
+ assert.match(source, /<SelectedDocumentGallery item=\{item/);
+ assert.match(source, /DocumentDownloadSelector/);
  const card = read('src/components/template-card.tsx');
  assert.match(card, /<QuickPreview slug=\{template\.slug\}/);
 });

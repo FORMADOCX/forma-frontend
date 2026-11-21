@@ -558,3 +558,28 @@ button:disabled{cursor:not-allowed;opacity:.5}
 .catalog-toolbar .forma-select-option{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:40px;padding:10px;border:0;border-radius:6px;background:transparent;color:var(--ink);text-align:left;font-size:13px}
 .catalog-toolbar .forma-select-option:is(:hover,:focus-visible){background:#eef5f0}
 .catalog-toolbar .forma-select-option.is-selected{color:var(--accent);font-weight:650}
+
+/* Document variant and format selection: compact editorial controls, one download action. */
+.variant-download{margin:4px 0 26px;padding:18px 0 0;border-top:1px solid var(--border);min-width:0}
+.variant-download h2{font-family:var(--font);font-size:17px;font-weight:650;margin:0 0 17px}
+.variant-fieldset{border:0;margin:0 0 17px;padding:0;min-width:0}
+.variant-fieldset legend{font-size:12px;color:var(--muted);font-weight:650;margin-bottom:9px}
+.variant-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.variant-tile{position:relative;display:flex;align-items:center;justify-content:space-between;gap:6px;padding:11px 12px;min-width:0;min-height:53px;border:1px solid var(--border);border-radius:8px;background:var(--surface,#fff);cursor:pointer;transition:border-color .16s ease,background-color .16s ease}
+.variant-tile:has(input:checked){background:#edf5ef;border-color:var(--accent)}
+.variant-tile:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:3px}
+.variant-tile input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.variant-tile span:first-of-type{display:grid;gap:2px;min-width:0}
+.variant-tile strong{font-size:13px;line-height:1.4;font-weight:650;overflow-wrap:anywhere}
+.variant-tile small{font-size:11px;line-height:1.45;color:var(--muted);overflow-wrap:anywhere}
+.variant-check{visibility:hidden;color:var(--accent);font-weight:750;flex:none}
+.variant-tile:has(input:checked) .variant-check{visibility:visible}
+.variant-selected{display:grid;gap:4px;margin:14px 0 15px;padding-top:13px;border-top:1px solid var(--border);overflow-wrap:anywhere}
+.variant-selected>span{color:var(--muted);font-size:12px}
+.variant-selected strong{font-size:13px;font-weight:650}
+.variant-selected small{color:var(--muted);font-size:12px}
+.variant-download-button{display:flex;align-items:center;justify-content:center;width:100%;min-height:48px;text-align:center;border-radius:7px}
+.variant-tile:hover{border-color:var(--accent)}
+@media(max-width:420px){.variant-options{grid-template-columns:repeat(2,minmax(0,1fr))}.variant-tile{padding:10px;min-height:48px}}
+@media(prefers-reduced-motion:reduce){.variant-tile{transition:none}}
+@media(max-width:767px){.detail-summary>.variant-download{order:7;margin:8px 0 15px}}

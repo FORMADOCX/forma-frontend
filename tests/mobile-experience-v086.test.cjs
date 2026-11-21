@@ -62,9 +62,9 @@ test('real document display precedes download on mobile and never crops real pre
  assert.match(css,/\.detail-summary>\.lead\{order:2/);
  assert.match(css,/\.detail-gallery-column\{order:3/);
  assert.match(css,/\.mobile-detail-formats\{order:6/);
- assert.match(css,/\.detail-summary>\.detail-actions\{order:7/);
+ assert.match(css,/\.detail-summary>\.variant-download\{order:7/);
  assert.match(css,/\.gallery-frame \.gallery-image\{height:auto;max-height:none;width:100%;object-fit:contain\}/);
- assert.match(detail,/DocumentGallery previews=\{item\.previews\?\?\[\]\}/);
+ assert.match(detail,/<SelectedDocumentGallery item=\{item\}/);
 });
 test('small screen cards are tap navigable, with no mobile Quick Preview',()=>{
  const card=source('src/components/template-card.tsx');
