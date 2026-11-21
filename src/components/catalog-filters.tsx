@@ -13,6 +13,13 @@ export function CatalogFilters({filters,params,base,locale}:{filters:CatalogFilt
  const [format,setFormat]=useState(params.format);
  const [selection,setSelection]=useState<Record<string,string[]>>({});
  const [opened,setOpened]=useState(false);
+ const activeCount=(params.format?1:0)+Object.values(params.attributes).filter(Boolean).length;
+ useEffect(()=>{
+  if(!opened)return;
+  const prior=document.body.style.overflow;
+  document.body.style.overflow='hidden';
+  return ()=>{document.body.style.overflow=prior};
+ },[opened]);
  useEffect(()=>{
   setFormat(params.format);
   const values:Record<string,string[]>={};
@@ -43,8 +50,8 @@ export function CatalogFilters({filters,params,base,locale}:{filters:CatalogFilt
  </>;
  return <>
   <form className="filter-sidebar" onSubmit={submit} aria-label={locale==='uk'?'Фільтри каталогу':'Catalog filters'}><h2>{locale==='uk'?'Фільтри':'Filters'}</h2>{controls('desktop')}</form>
-  <button ref={trigger} className="filter-mobile-trigger" type="button" aria-haspopup="dialog" aria-expanded={opened} onClick={()=>{dialog.current?.showModal();setOpened(true);}}>{locale==='uk'?'Відкрити фільтри':'Open filters'}</button>
-  <dialog ref={dialog} className="filter-mobile-dialog" aria-label={locale==='uk'?'Фільтри каталогу':'Catalog filters'} onClose={()=>{setOpened(false);trigger.current?.focus();}}>
+  <button ref={trigger} className="filter-mobile-trigger" type="button" aria-haspopup="dialog" aria-expanded={opened} onClick={()=>{dialog.current?.showModal();setOpened(true);}}>{locale==='uk'?'Фільтри':'Filters'}{activeCount>0?` (${activeCount})`:''}</button>
+  <dialog ref={dialog} className="filter-mobile-dialog" aria-modal="true" aria-label={locale==='uk'?'Фільтри каталогу':'Catalog filters'} onClose={()=>{setOpened(false);trigger.current?.focus();}}>
    <div className="filter-dialog-header"><h2>{locale==='uk'?'Фільтри':'Filters'}</h2><button type="button" onClick={close} aria-label={locale==='uk'?'Закрити фільтри':'Close filters'}>×</button></div>
    <form onSubmit={submit}>{controls('mobile')}</form>
   </dialog>

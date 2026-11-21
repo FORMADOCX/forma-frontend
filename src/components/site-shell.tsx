@@ -4,6 +4,7 @@ import {LocaleSwitch} from './locale-switch';
 import {localizedPath,dictionary,type Locale} from '@/lib/i18n';
 import {getCmsNavigation,type CmsNavigationLink} from '@/lib/api/cms-navigation';
 import {SearchForm} from './search-form';
+import {MobileBottomNavigation} from './mobile-bottom-navigation';
 
 export function Header({locale,headerLinks=[]}:{locale:Locale;headerLinks?:CmsNavigationLink[]}){
  const t=dictionary[locale];
@@ -18,7 +19,7 @@ export function Header({locale,headerLinks=[]}:{locale:Locale;headerLinks?:CmsNa
    <Suspense fallback={<span className="locale-switch" aria-hidden="true">EN / UK</span>}><LocaleSwitch locale={locale}/></Suspense>
   </div>
   <details className="mobile-navigation"><summary aria-label={locale==='uk'?'Відкрити меню':'Open menu'}>{locale==='uk'?'Меню':'Menu'} <span aria-hidden="true">☰</span></summary>
-   <nav aria-label={locale==='uk'?'Мобільна навігація':'Mobile navigation'}><Link href={localizedPath(locale,'/templates')}>{t.templates}</Link><Link href={localizedPath(locale,'/categories')}>{t.categories}</Link>{headerLinks.map(page=><Link key={page.slug} href={localizedPath(locale,`/${page.slug}`)}>{page.title}</Link>)}<Link href={localizedPath(locale,'/search')}>{t.search}</Link></nav>
+   <nav aria-label={locale==='uk'?'Додаткова навігація':'Additional navigation'}><Link href={localizedPath(locale,'/categories')}>{t.categories}</Link>{headerLinks.map(page=><Link key={page.slug} href={localizedPath(locale,`/${page.slug}`)}>{page.title}</Link>)}</nav>
   </details>
  </div></header>
 }
@@ -27,7 +28,7 @@ export function Footer({locale,pages=[]}:{locale:Locale;pages?:{slug:string;titl
 }
 export async function SiteShell({locale,children}:{locale:Locale;children:React.ReactNode}){
  const {headerLinks,footerLinks}=await getCmsNavigation(locale);
- return <><a href="#content" className="skip-link">{locale==='uk'?'До вмісту':'Skip to content'}</a><Header locale={locale} headerLinks={headerLinks}/><main id="content" tabIndex={-1}>{children}</main><Footer locale={locale} pages={footerLinks}/></>;
+ return <><a href="#content" className="skip-link">{locale==='uk'?'До вмісту':'Skip to content'}</a><Header locale={locale} headerLinks={headerLinks}/><main id="content" tabIndex={-1}>{children}</main><Footer locale={locale} pages={footerLinks}/><MobileBottomNavigation locale={locale}/></>;
 }
 export function PageIntro({eyebrow,title,description}:{eyebrow?:string;title:string;description?:string}){
  return <div className="page-intro">{eyebrow&&<p className="eyebrow">{eyebrow}</p>}<h1>{title}</h1>{description&&<p className="lead">{description}</p>}</div>;

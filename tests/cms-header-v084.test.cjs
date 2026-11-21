@@ -76,7 +76,7 @@ test('header renders CMS links in both desktop and mobile; footer renders indepe
   './locale-switch':{LocaleSwitch:'LocaleSwitch'},
   '@/lib/i18n':{localizedPath:(locale,path='/')=>locale==='uk'?`/uk${path==='/ ' ? '' : path==='/'?'':path}`:path,dictionary:{en:{categories:'Categories',templates:'Templates',search:'Search',footer:'Text'},uk:{categories:'Категорії',templates:'Шаблони',search:'Пошук',footer:'Текст'}}},
   '@/lib/api/cms-navigation':{getCmsNavigation:async()=>({headerLinks:[],footerLinks:[]})},
-  './search-form':{SearchForm:'SearchForm'},'react/jsx-runtime':jsxRuntime
+  './search-form':{SearchForm:'SearchForm'},'./mobile-bottom-navigation':{MobileBottomNavigation:'MobileBottomNavigation'},'react/jsx-runtime':jsxRuntime
  };
  new Function('module','exports','require',js)(compiledModule,compiledModule.exports,name=>{if(name in stubs)return stubs[name];throw Error(name)});
  const {Header,Footer}=compiledModule.exports;

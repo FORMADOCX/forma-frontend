@@ -275,3 +275,14 @@ Checks here: `npm test` 28/28 passed, `npm run check:structure` passed. `npm run
 - Implemented `src/components/forma-select.tsx` as the shared custom accessible dropdown for catalog category/sort and filter format.
 - Current query serialization is unchanged (named hidden inputs for GET controls, existing `applyCatalogFilters` for the sidebar). EN/UK switch and mobile navigation have consistent menu presentation; attribute checkboxes and radios remain as-is.
 - Added regression coverage `tests/editorial-dropdown-v086.test.cjs`. Full browser/keyboard smoke testing and production build are required before deployment approval.
+
+
+## Mobile app-like UX (2026-11-21)
+- Based on the latest available category/search breadcrumbs build (package version 0.8.6).
+- Added mobile-only Home/Templates/Search bottom navigation with current-route selection, EN/UK and safe-area padding.
+- Existing native dialog-based catalog filters styled as a mobile bottom sheet without duplicating Django filter state/query logic.
+- Mobile document cards use two columns above 359px; Template Detail orders title/summary before full real preview using CSS.
+- Desktop rules, admin-only publishing, Django download/preview endpoints, and staging noindex remain unchanged.
+- Verify on real devices: keyboard viewport resizing, scroll locking and access to bottom-sheet controls; automated browser QA is not claimed without execution.
+
+- Mobile UX release version: v0.8.7 (based on v0.8.6 plus category/search breadcrumbs fixes).

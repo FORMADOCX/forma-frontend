@@ -218,3 +218,10 @@ Historical release notes below describe earlier implementations; **the current v
 - Styled EN/UK language and mobile navigation menus as compact editorial dropdown surfaces.
 - Preserved checkbox/radio groups for backend-defined multi-/single-select attributes.
 - No backend APIs, package dependencies, security settings, or document preview logic changed.
+
+### Mobile navigation and responsive navigation polish (2026-11-21)
+- Mobile-only safe-area Home/Templates/Search bottom navigation; narrower screens use two-column document cards where practical.
+- Reused native modal catalog filters as bottom sheet; mobile detail displays title and description before document image.
+- Current staging URLs and SEO noindex preserved.
+
+- Mobile UX release version: v0.8.7 (based on v0.8.6 plus category/search breadcrumbs fixes).
