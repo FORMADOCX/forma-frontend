@@ -8,7 +8,7 @@ export function TemplateCard({template,locale,featured=false}:{template:Template
  const href=localizedPath(locale,`/templates/${template.slug}`);
  return <article className={`template-card${featured?' template-card-featured':''}`}>
   <Link className="template-card-cover" href={href} aria-label={`${locale==='uk'?'Переглянути':'View'} ${template.title}`}><DocumentCover url={template.cover_preview_url} locale={locale} backendOrigin={getBrowserApiOrigin()}/></Link>
-  <div className="template-card-details"><Link className="template-card-title" href={href}><h2>{template.title}</h2></Link>
+  <div className="template-card-details"><Link className="template-card-title" href={href}>{featured?<h3>{template.title}</h3>:<h2>{template.title}</h2>}</Link>
    {template.summary?.trim()&&<p>{template.summary}</p>}
    {!featured&&template.categories.length>0&&<div className="template-card-meta"><span>{template.categories.map(c=>c.name).join(' · ')}</span></div>}
   </div>

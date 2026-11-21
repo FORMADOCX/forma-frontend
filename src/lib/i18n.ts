@@ -9,8 +9,8 @@ export const dictionary = {
   en: {
     templates: 'All templates', categories: 'Categories',
     search: 'Search', searchPlaceholder: 'Search document templates',
-    homeTitle: 'Documents worth using.',
-    homeText: 'A considered library of editable documents for work and everyday life.',
+    homeTitle: 'FORMA — Editable Document Templates for Work & Life',
+    homeText: 'Explore thoughtfully designed, editable document templates for business and everyday needs. Preview documents and download available Word, Excel or PDF files.',
     browse: 'Browse templates', featured: 'Browse by category',
     catalogTitle: 'All templates', catalogDescription: 'Explore editable documents by format and purpose.',
     categoriesTitle: 'Categories', categoriesDescription: 'Find a document for the task at hand.',
@@ -25,8 +25,8 @@ export const dictionary = {
   uk: {
     templates: 'Усі шаблони', categories: 'Категорії',
     search: 'Пошук', searchPlaceholder: 'Пошук шаблонів документів',
-    homeTitle: 'Документи, якими зручно користуватися.',
-    homeText: 'Ретельно впорядкована бібліотека редагованих документів для роботи й повсякденних справ.',
+    homeTitle: 'FORMA — Редаговані шаблони документів для роботи й життя',
+    homeText: 'Знаходьте продумані редаговані шаблони документів для бізнесу та щоденних потреб. Переглядайте документи й завантажуйте доступні формати Word, Excel або PDF.',
     browse: 'Переглянути шаблони', featured: 'Огляд категорій',
     catalogTitle: 'Усі шаблони', catalogDescription: 'Шукайте редаговані документи за форматом і призначенням.',
     categoriesTitle: 'Категорії', categoriesDescription: 'Знайдіть документ для свого завдання.',

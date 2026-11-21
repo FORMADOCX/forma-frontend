@@ -26,6 +26,21 @@ async function read<T>(path:string,query:Record<string,string|number|undefined|s
 }
 const slugSegment=(slug:string)=>encodeURIComponent(slug);
 export const getCategories=(lang:Language,page=1,page_size=100)=>read<Page<Category>>('categories/',{lang,page,page_size});
+/** CMS-selected homepage categories only; follows the paginated Django API. */
+export async function getHomepageCategories(lang:Language):Promise<Category[]>{
+ const collected:Category[]=[];
+ const seen=new Set<string>();
+ for(let page=1;page<=100;page++){
+  const response=await read<Page<Category>>('categories/',{lang,homepage:'true',page,page_size:100});
+  if(!Array.isArray(response.results))throw new ApiError(502,'Invalid homepage categories response');
+  for(const category of response.results){
+   if(category?.show_on_homepage!==true || !category.id || seen.has(category.id))continue;
+   seen.add(category.id);collected.push(category);
+  }
+  if(!response.next)return collected;
+ }
+ throw new ApiError(502,'Homepage category pagination exceeded safe limit');
+}
 export const getCategory=(slug:string,lang:Language)=>read<Category>(`categories/${slugSegment(slug)}/`,{lang});
 export const getTemplates = async (query: CatalogQuery): Promise<Page<TemplateList>> => { const result = await read<Page<TemplateList>>('templates/', {
  lang:query.lang,page:query.page,page_size:query.page_size,category:query.category,q:query.q,sort:query.sort,format:query.format,

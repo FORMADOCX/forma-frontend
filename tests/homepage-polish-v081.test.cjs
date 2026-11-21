@@ -3,12 +3,11 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const read = path => fs.readFileSync(path,'utf8');
 
-test('hero illustration remains separate from real backend document covers', () => {
- const page = read('src/components/pages.tsx');
- assert.match(page,/\/images\/forma-hero\.webp/);
- assert.doesNotMatch(page,/hero-visual-empty|showcase\.cover_preview_url/);
- assert.match(page,/getTemplates\(\{lang:locale,page_size:8\}\)/);
- assert.match(page,/actualTemplates\.slice\(0,5\)/);
+test('homepage hero is text-first and templates use real API records',()=>{
+ const page=read('src/components/pages.tsx');
+ assert.doesNotMatch(page,/forma-hero\.webp|mockTemplates/);
+ assert.match(page,/getTemplates\(\{lang:locale,page:1,page_size:8,sort:'newest'\}\)/);
+ assert.match(page,/homepageCollections\(templates\)/);
 });
 test('magnifier is a proper accessible decorative SVG and search stays functional', () => {
  const form=read('src/components/search-form.tsx');
