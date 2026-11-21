@@ -10,8 +10,8 @@ test('real published categories remain API driven with no fabricated category ic
  assert.doesNotMatch(page,/category-symbol/);
  assert.match(page,/home-category-title/);
  const css=read('src/app/globals.css');
- assert.match(css,/\.home-category-card\{background:#edf5ef/);
- assert.match(css,/\.home-category-title\{[^}]*white-space:nowrap/);
+ assert.match(css,/\.home-categories \.home-category-card\{display:flex/);
+ assert.match(css,/\.home-categories \.home-category-title\{display:block;white-space:normal/);
 });
 
 test('hero artwork remains optimized and independent of real document previews',()=>{

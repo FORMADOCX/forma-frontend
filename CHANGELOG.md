@@ -265,3 +265,7 @@ Historical release notes below describe earlier implementations; **the current v
 - Preserved provided 0.8.9 hero, image, search, featured template cards, header, footer and navigation.
 - Featured Categories now uses CMS-only `homepage=true` endpoint, verified visibility and backend order, paginated safely; decorative icon registry is allowlisted.
 - Added one compact localized Find / Preview / Download section after featured templates. No Recently Added or homepage redesign.
+
+## v0.8.9 — Homepage category reference layout (2026-11-21)
+- Reworked only the homepage CMS category block to match the supplied editorial reference: heading with eyebrow, real descriptions, colored icon panels, three-column desktop cards, responsive tablet/mobile layouts and All categories link.
+- Uses real CMS category name/description/icon, preserves server ordering, includes at most six tiles with a link to all categories; no mock content. Hero, featured templates, workflow, header and footer unchanged.

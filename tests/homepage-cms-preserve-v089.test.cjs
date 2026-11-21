@@ -22,7 +22,7 @@ test('CMS categories are separate from original hero popular links',()=>{
  assert.match(home,/getHomepageCategories\(locale\)/);
  assert.match(home,/featuredCategories.length>0&&<section/);
  assert.match(home,/actualCategories.slice\(0,5\)/);
- assert.match(home,/featuredCategories.slice\(0,5\)/);
+ assert.match(home,/featuredCategories.slice\(0,6\)/);
  assert.doesNotMatch(home,/No categories published yet/);
 });
 test('homepage endpoint uses a single allowlisted server API helper',()=>{

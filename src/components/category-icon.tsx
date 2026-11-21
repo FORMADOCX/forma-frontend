@@ -20,6 +20,8 @@ const symbols:Record<string,ReactNode> = {
  'notebook-pen': <><path d="M8 3h9a2 2 0 0 1 2 2v6M8 3v18h6M5 3v18M3 7h4M3 12h4M3 17h4"/><path d="m14 19 6-6 2 2-6 6-3 1 1-3Z"/></>,
 };
 
+export function hasCategoryIcon(name?:string|null):boolean {return Boolean(name && Object.prototype.hasOwnProperty.call(symbols,name));}
+
 export function CategoryIcon({name}:{name?:string|null}) {
  const symbol = name ? symbols[name] : undefined;
  if (!symbol) return null;

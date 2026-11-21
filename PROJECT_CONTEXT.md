@@ -331,3 +331,8 @@ Checks here: `npm test` 28/28 passed, `npm run check:structure` passed. `npm run
 - The original hero uses general category links, intentionally preserved; they do not represent CMS featured categories.
 - Added compact localized Find. Preview. Download. section and optional approved CMS icons.
 - Backend live staging/visual browser QA remains to be verified.
+
+## Homepage categories — visual reference update (2026-11-21)
+- Approved work scope: homepage category section visually matched to user screenshot (3x2 desktop, colored icon panels, serif title, real description, right arrow).
+- CMS category endpoint `homepage=true` remains the exclusive source; only actual returned entries shown (up to six) and all-categories link resolves remaining categories. No fabricated category descriptions or icons.
+- Pending: live Django verification and visual QA at desktop/tablet/mobile; no Backend changes.
