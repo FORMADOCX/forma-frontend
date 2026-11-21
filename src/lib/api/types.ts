@@ -3,7 +3,7 @@ export type Language = 'en' | 'uk';
 export type SortOrder = 'newest' | 'oldest' | 'title' | '-title';
 export interface Seo {title?:string; description?:string; canonical?:string; og_title?:string; og_description?:string; og_image?:string|null; index?:boolean; robots?:string|null}
 export interface CategorySummary {slug:string;name:string}
-export interface Category {id:string;slug:string;name:string;description:string;language:string;parent_slug:string|null;seo:Seo|null}
+export interface Category {id:string;slug:string;name:string;description:string;language:string;parent_slug:string|null;seo:Seo|null;icon?:string|null;show_on_homepage?:boolean}
 export type AttributeDataType = 'text'|'number'|'boolean'|'single_select'|'multi_select';
 /** Backend attribute.value is JSON: string, scalar, selected codes array, or null. */
 export interface Attribute {code:string;label:string;data_type:AttributeDataType;value:string|number|boolean|string[]|null}

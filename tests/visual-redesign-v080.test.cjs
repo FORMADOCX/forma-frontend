@@ -21,7 +21,7 @@ test('homepage featured data derive from live catalog and hero uses a separate e
  assert.match(src,/\/images\/forma-hero\.webp/);
  assert.doesNotMatch(src,/showcase\.cover_preview_url/);
  assert.match(src,/actualCategories\.slice\(0,5\)/);
- assert.match(src,/actualTemplates\.slice\(0,5\)/);
+ assert.match(src,/actualTemplates\.slice\(0,4\)/);
  assert.doesNotMatch(src,/placeholder\.png|fake-templates|mockTemplates/);
 });
 

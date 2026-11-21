@@ -8,7 +8,7 @@ test('hero illustration remains separate from real backend document covers', () 
  assert.match(page,/\/images\/forma-hero\.webp/);
  assert.doesNotMatch(page,/hero-visual-empty|showcase\.cover_preview_url/);
  assert.match(page,/getTemplates\(\{lang:locale,page_size:8\}\)/);
- assert.match(page,/actualTemplates\.slice\(0,5\)/);
+ assert.match(page,/actualTemplates\.slice\(0,4\)/);
 });
 test('magnifier is a proper accessible decorative SVG and search stays functional', () => {
  const form=read('src/components/search-form.tsx');

@@ -7,6 +7,7 @@ export function localizedPath(locale: Locale, path = '/') {
 }
 export const dictionary = {
   en: {
+    howTitle: 'Find. Preview. Download.', howDescription: 'A simple way to find the right document and start working.', howFind: 'Find', howFindText: 'Search templates or browse categories.', howPreview: 'Preview', howPreviewText: 'Review the document before downloading.', howDownload: 'Download', howDownloadText: 'Choose an available format and get your file.', allCategories: 'All categories',
     templates: 'All templates', categories: 'Categories',
     search: 'Search', searchPlaceholder: 'Search document templates',
     homeTitle: 'Documents worth using.',
@@ -23,6 +24,7 @@ export const dictionary = {
     pageNotFound: 'Page not found', back: 'Back to homepage',
   },
   uk: {
+    howTitle: 'Знайдіть. Перегляньте. Завантажте.', howDescription: 'Простий спосіб знайти потрібний документ і почати роботу.', howFind: 'Знайдіть', howFindText: 'Шукайте шаблони або переглядайте категорії.', howPreview: 'Перегляньте', howPreviewText: 'Ознайомтеся з документом перед завантаженням.', howDownload: 'Завантажте', howDownloadText: 'Виберіть доступний формат і отримайте файл.', allCategories: 'Усі категорії',
     templates: 'Усі шаблони', categories: 'Категорії',
     search: 'Пошук', searchPlaceholder: 'Пошук шаблонів документів',
     homeTitle: 'Документи, якими зручно користуватися.',

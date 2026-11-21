@@ -40,7 +40,8 @@ test('real image is wired into card, dialog and detail with no fabricated fallba
  assert.match(detail,/<SelectedDocumentGallery item=\{item/);
  const component=fs.readFileSync('src/components/document-cover.tsx','utf8');
  assert.match(component,/<Image/);
- assert.match(component,/unoptimized=\{source\.unoptimized\}/);
+ assert.match(component,/unoptimized(?:\s|\/>)/);
+ assert.match(component,/onError=\{\(\)=>setFailedSource\(source.src\)\}/);
  const config=fs.readFileSync('next.config.ts','utf8');
  assert.match(config,/remotePatterns/);
  assert.doesNotMatch(config,/dangerouslyAllowLocalIP\s*:\s*true/);
