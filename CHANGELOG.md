@@ -269,3 +269,8 @@ Historical release notes below describe earlier implementations; **the current v
 ## v0.8.9 — Homepage category reference layout (2026-11-21)
 - Reworked only the homepage CMS category block to match the supplied editorial reference: heading with eyebrow, real descriptions, colored icon panels, three-column desktop cards, responsive tablet/mobile layouts and All categories link.
 - Uses real CMS category name/description/icon, preserves server ordering, includes at most six tiles with a link to all categories; no mock content. Hero, featured templates, workflow, header and footer unchanged.
+
+## v0.8.9 — Compact homepage category proportions (2026-11-21)
+- Reduced only the homepage category section's heading, whitespace, tile height, icon area and typography to match the requested smaller scale while retaining the approved reference layout.
+- Descriptions are visually limited to two lines, leaving CMS text unchanged. Desktop 3-column, tablet 2-column and mobile 1-column layouts remain.
+- No API, navigation, Hero, Featured Templates, workflow, backend, or dependency changes.

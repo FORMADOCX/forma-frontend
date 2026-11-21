@@ -1,3 +1,7 @@
+## Homepage category size adjustment — 2026-11-21
+
+Reduced reference-style homepage category block via scoped CSS only: desktop cards min-height 151 → 108 px, icon dimensions 43 → 31 px, title max size 30 → 25 px, descriptions limited visually to two lines, reduced header/section spacing. Breakpoints and Django CMS visibility/links unchanged. Browser visual QA remains required.
+
 ### Homepage workflow refinement — 2026-11-21
 
 The `Find. Preview. Download.` explanatory section was visually replaced with a split editorial experience: pale neutral left intro with a functional `/templates` link, and three clearly sequenced steps on the right. Text is localized EN/UK and layout stacks below 800px. No Hero, CMS categories, cards, navigation, APIs, metadata, or backend changes. Current app version remains 0.8.9; no incompatible release change. Visual browser QA and production build must be separately verified before acceptance.
