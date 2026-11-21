@@ -98,3 +98,9 @@ The former Community Submission strip is removed. Keep Homepage hero/category/fe
 - The EN/UK language switch uses a native `<details>` dropdown with localized route links; the mobile navigation menu uses the same visual surface language.
 - Multi-select dynamic attributes remain accessible native checkbox groups and single-select attributes remain radio groups; these are deliberately not replaced with single-value dropdowns.
 - Reduced motion suppresses chevron transitions. Do not add a second dropdown library or duplicate UI markup for each filter.
+
+## v0.8.8 — Catalog controls
+
+The catalog sidebar uses existing forest-green tokens, compact stacked groups and native checkbox/radio inputs. Format, category and sort continue to reuse the accessible `FormaSelect`. Desktop filter values and sorting apply immediately through Next.js client-side navigation; mobile retains its native bottom-sheet with a single Show results action to avoid dismissing it for every selection. Search is rendered only on `/search` (as well as the global and homepage search), not All Templates or Category Detail.
+
+Active filter chips are semantic links that remove exactly one selected value. Each query change resets pagination, preserving `q`, category and sort. `attr.<code>` is serialized as one CSV parameter, e.g. `attr.page-size=a4%2Cus-letter`; frontend does not duplicate the `attr.*` parameter. Filter option counts are counts from `/filters/`, not guarantees of results for every combination; current results come from `/templates/.count`. Real errors retain error states rather than showing fabricated empty results.

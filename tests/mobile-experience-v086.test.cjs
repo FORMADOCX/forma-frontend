@@ -13,9 +13,9 @@ const css=source('src/app/globals.css');
 const detail=source('src/components/catalog-data-pages.tsx');
 function activeSection(pathname){
  const js=ts.transpileModule(nav,{compilerOptions:{module:ts.ModuleKind.CommonJS,jsx:ts.JsxEmit.ReactJSX,target:ts.ScriptTarget.ES2022}}).outputText;
- const module={exports:{}};
- vm.runInNewContext(js,{module,exports:module.exports,require:(id)=>id==='react/jsx-runtime'?{jsx:()=>null,jsxs:()=>null,Fragment:'Fragment'}:id==='next/link'?{default:'LINK'}:id==='next/navigation'?{usePathname:()=>'/'}:id==='@/lib/i18n'?{localizedPath:()=>'/'}:{},Object});
- return module.exports.activeMobileSection(pathname);
+ const compiledModule={exports:{}};
+ vm.runInNewContext(js,{module:compiledModule,exports:compiledModule.exports,require:(id)=>id==='react/jsx-runtime'?{jsx:()=>null,jsxs:()=>null,Fragment:'Fragment'}:id==='next/link'?{default:'LINK'}:id==='next/navigation'?{usePathname:()=>'/'}:id==='@/lib/i18n'?{localizedPath:()=>'/'}:{},Object});
+ return compiledModule.exports.activeMobileSection(pathname);
 }
 test('mobile bottom navigation active route includes EN/UK templates categories search and no false home on CMS pages',()=>{
  const active=activeSection;
@@ -50,7 +50,7 @@ test('bottom navigation is mobile-only, respects iPhone safe area and reserves c
 test('existing real mobile filters are shown through native dialog styled as bottom sheet',()=>{
  assert.match(filters,/dialog\.current\?\.showModal\(\)/);
  assert.match(filters,/useRouter/);
- assert.match(filters,/applyCatalogFilters\(params,format,selection\)/);
+ assert.match(filters,/applyCatalogFilters\(params,nextFormat,next\)/);
  assert.match(filters,/clearCatalogFilters\(params\)/);
  assert.match(filters,/aria-modal="true"/);
  assert.match(filters,/document\.body\.style\.overflow='hidden'/);

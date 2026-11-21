@@ -41,7 +41,7 @@ test('shared loading indicator used by route loaders and Quick Preview',()=>{
 test('unified editorial dropdowns retain submitted category, sort and format values',()=>{
  const css=read('src/app/globals.css');assert.match(css,/\.forma-select-menu/);assert.match(css,/\.forma-select-option/);
  const select=read('src/components/forma-select.tsx');assert.match(select,/role="listbox"/);assert.match(select,/type="hidden" name=\{name\}/);
- const catalog=read('src/components/catalog.tsx');assert.match(catalog,/FormaSelect name="sort"/);assert.match(catalog,/FormaSelect name="category"/);
+ const catalog=read('src/components/catalog-toolbar.tsx');assert.match(catalog,/value=\{params.sort\}/);assert.match(catalog,/value=\{params.category\}/);
  assert.match(read('src/components/catalog-filters.tsx'),/<FormaSelect label=/);
 });
 test('numbered pagination keeps all Django catalog filters and valid limits',()=>{
@@ -60,5 +60,5 @@ test('interactive cursor and isolated image zoom respect reduced motion',()=>{
 test('publishing stays admin only, no backend contract changed',()=>{
  const s=read('src/components/site-shell.tsx');assert.doesNotMatch(s,/\/submit|SubmissionForm/);
  for(const p of ['src/app/(en)/submit/page.tsx','src/app/(uk)/uk/submit/page.tsx'])assert.match(read(p),/notFound\(\)/);
- assert.equal(JSON.parse(read('package.json')).version,'0.8.7');
+ assert.equal(JSON.parse(read('package.json')).version,'0.8.8');
 });

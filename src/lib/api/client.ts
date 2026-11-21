@@ -1,6 +1,7 @@
 import 'server-only';
 import type {Category, CatalogQuery, Language, Page, TemplateDetail, TemplateList, TemplateQuickPreview,FiltersResponse} from './types';
 import {normalizeTemplateUrls} from './normalize-document-urls';
+import {normalizedAttributes} from './query';
 
 export class ApiError extends Error {
  constructor(public readonly status:number, message:string){super(message);this.name='ApiError';}
@@ -28,8 +29,7 @@ export const getCategories=(lang:Language,page=1,page_size=100)=>read<Page<Categ
 export const getCategory=(slug:string,lang:Language)=>read<Category>(`categories/${slugSegment(slug)}/`,{lang});
 export const getTemplates = async (query: CatalogQuery): Promise<Page<TemplateList>> => { const result = await read<Page<TemplateList>>('templates/', {
  lang:query.lang,page:query.page,page_size:query.page_size,category:query.category,q:query.q,sort:query.sort,format:query.format,
- ...Object.fromEntries(Object.entries(query.attributes??{}).map(([key,value])=>[`attr.${key}`,value])),
- ...Object.fromEntries(Object.entries(query.rawAttributes??{}).map(([key,values])=>[`attr.${key}`,values]))
+ ...Object.fromEntries(Object.entries(normalizedAttributes(query.attributes,query.rawAttributes)).map(([key,value])=>[`attr.${key}`,value]))
 });return {...result,results:result.results.map(normalizeTemplateUrls)};};
 export const getFilters=(lang:Language,category?:string,format?:string)=>read<FiltersResponse>('filters/',{lang,category,format});
 export const getTemplate=async(slug:string,lang:Language)=>normalizeTemplateUrls(await read<TemplateDetail>(`templates/${slugSegment(slug)}/`,{lang}));

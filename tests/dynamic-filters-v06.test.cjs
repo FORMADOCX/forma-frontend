@@ -30,10 +30,10 @@ test('clear filters preserves search and category but resets page',()=>{
  const p=clearCatalogFilters(parseCatalogQuery({'attr.page-size':'a4',format:'docx',q:'hello',category:'legal',page:'4'}));
  const query=asQuery(catalogHref('/templates',p));assert.equal(query.toString(),'q=hello&category=legal');
 });
-test('unknown and duplicated attr parameter values survive parsing and are forwarded for backend validation',()=>{
+test('duplicated attribute values normalize to one backend CSV parameter',()=>{
  const p=parseCatalogQuery({'attr.not-registered':['x','y'],'attr.unusual':'invalid!',q:'foo'});
  const query=asQuery(catalogHref('/templates',p));
- assert.deepEqual(query.getAll('attr.not-registered'),['x','y']);assert.equal(query.get('attr.unusual'),'invalid!');
+ assert.deepEqual(query.getAll('attr.not-registered'),['x,y']);assert.equal(query.get('attr.unusual'),'invalid!');
 });
 test('locale URLs retain filters by using the same query suffix',()=>{
  const p=parseCatalogQuery({'attr.page-size':'a4',format:'xlsx',q:'forms'});

@@ -1,3 +1,11 @@
+## v0.8.8 — Catalog filters, sorting and URL contract (2026-11-21)
+
+**Implemented:** One canonical CSV value per Django `attr.<code>` query parameter, including when a historical URL contains duplicate parameters. `parseCatalogQuery`, `catalogHref`, `applyCatalogFilters`, `clearCatalogFilters`, `removeCatalogFilter` and the server API client now share `normalizedAttributes`. Multiple choices within one attribute use CSV OR; separate attributes remain AND in Django. Legacy duplicate parameters are normalized on navigation; format query behavior is unchanged. Filter options are supplied by Django only, and displayed option counts are not treated as contextual results counts. The catalog uses `templates.count` for actual results and distinguishes API 400/503 failures from a valid zero-result response.
+
+**UX:** Category and sorting dropdowns use client-side route navigation on selection; sort has no Apply button and resets page to 1. The desktop sidebar applies facets immediately; mobile retains a bottom sheet with Show results / Clear all and shares URL helpers. Active filter chips remove individual OR values; Clear all preserves q, category and sort. Search remains exclusively on Homepage, global search and Search route, not Templates/Category. No changes to Django, data sources, download security, EN/UK routing, SEO noindex, Admin-Only Publishing, mobile bottom navigation, or backend endpoints.
+
+**Verification:** 154/154 automated source and query-contract tests passed using global TypeScript through `NODE_PATH`; check:structure passed. `npm ci --offline` failed ENOTCACHED (yocto-queue), so full typecheck/lint/build cannot be confirmed in this environment. The staging Django API could not be reached from this environment, so real filtered results and browser UI interactions are not verified. These remain acceptance steps before release.
+
 ## Current breadcrumb navigation update (2026-11-20)
 
 **Implemented:** Category Detail always shows `Home / Category` (no category listing or parent step); Search shows `Home / query`, with a localized search title if the query is empty. Shared breadcrumbs keep UI and JSON-LD in sync. Template Detail rules and backend category selection remain unchanged. No extra parent API fetch on Category Detail. Admin-only publishing, staging noindex, EN/UK, and filters preserved.
@@ -297,3 +305,9 @@ Checks here: `npm test` 28/28 passed, `npm run check:structure` passed. `npm run
 - Removed visible `q` search input from `/templates` and `/categories/[slug]` catalog controls. `/search`, site header search and homepage hero search remain functional.
 - A pre-existing `q` query parameter is carried as a hidden GET input on non-search catalog pages to preserve URL-filter/pagination semantics without showing a duplicate search field.
 - Added a desktop three-column layout for catalog controls without search; mobile and tablet use existing responsive layout. No API/SEO changes.
+
+
+### v0.8.8 test-only ESLint hotfix (2026-11-21)
+- Renamed the local CommonJS VM `module` variable to `compiledModule` in `tests/mobile-experience-v086.test.cjs` to avoid `@next/next/no-assign-module-variable`.
+- No application source, API contract, UI, or dependencies changed.
+- 154/154 tests and structure checks passed in packaging environment with global TypeScript resolution; full ESLint/typecheck/build not verified because `npm ci --offline` lacks cached `yocto-queue`.

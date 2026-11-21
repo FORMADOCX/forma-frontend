@@ -1,3 +1,14 @@
+## v0.8.8 — ESLint test hotfix (2026-11-21)
+- Fix `@next/next/no-assign-module-variable` in the mobile experience test without changing behavior.
+
+## 0.8.8 — Catalog controls and backend attribute filtering (2026-11-21)
+
+- Fixed duplicate `attr.*` request parameters by normalizing multi-select selections to a single comma-separated value per key in URL builders and the Django API client.
+- Added shared facet helpers, per-value removable active filters, clear-all links and preserved query/category/sort state across changes and pagination.
+- Made sorting (and category selection) apply immediately via Next.js client navigation, resetting the page; added compact desktop facets with immediate updates, retaining mobile bottom-sheet batch application.
+- Kept real filter option counts distinct from actual `templates.count`, preserved API error states, no extra search input on Templates/Category pages.
+- Added contract and regression coverage; no new dependencies or backend/API changes. Staging E2E and build pending because environment lacks a complete npm install.
+
 ## v0.8.7 — Mobile navigation refinement (2026-11-21)
 - Removed hamburger menu from mobile header (links remain in footer).
 - Replaced active bottom-tab underline with a forest-green filled surface and white foreground.

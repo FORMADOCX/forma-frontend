@@ -57,6 +57,6 @@ test('EN/UK links preserve machine query values, empty backend results produce e
  const uk=new URL(catalogHref('/uk/categories/invoices',p),'https://forma.example');
  assert.equal(en.search,uk.search);
  const catalog=fs.readFileSync('src/components/catalog.tsx','utf8');
- assert.match(catalog,/!items\?\.results\.length\?<div role="status"/);
+ assert.match(catalog,/!items\?\.results\.length\?<>/);
  assert.match(catalog,/items\.results\.map\(item=>/);
 });

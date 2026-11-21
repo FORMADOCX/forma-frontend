@@ -5,20 +5,21 @@ const path=require('node:path');
 const read=p=>fs.readFileSync(path.join(__dirname,'..',p),'utf8');
 
 test('catalog dropdowns preserve native GET query names and backend options',()=>{
- const catalog=read('src/components/catalog.tsx');
- assert.match(catalog,/<FormaSelect name="category"/);
- assert.match(catalog,/<FormaSelect name="sort"/);
+ const catalog=read('src/components/catalog-toolbar.tsx');
+ assert.match(catalog,/<FormaSelect label=/);
+ assert.match(catalog,/onChange=\{category=>go/);
+ assert.match(catalog,/onChange=\{value=>/);
  assert.match(catalog,/value:c.slug,label:c.name/);
- assert.match(catalog,/defaultValue=\{params.category\}/);
- assert.match(catalog,/defaultValue=\{params.sort\}/);
- assert.match(catalog,/params.rawAttributes/);
- assert.match(catalog,/params.rawFormat/);
+ assert.match(catalog,/value=\{params.category\}/);
+ assert.match(catalog,/value=\{params.sort\}/);
+ assert.match(read('src/lib/api/query.ts'),/rawAttributes/);
+ assert.match(read('src/components/catalog.tsx'),/params.rawFormat/);
 });
 test('filter format remains a controlled dropdown with unchanged selection handlers',()=>{
  const source=read('src/components/catalog-filters.tsx');
  assert.match(source,/<FormaSelect label=/);
- assert.match(source,/value=\{format\} onChange=\{setFormat\}/);
- assert.match(source,/applyCatalogFilters\(params,format,selection\)/);
+ assert.match(source,/value=\{mobile\?format:params.format\}/);
+ assert.match(source,/applyCatalogFilters\(params,nextFormat,next\)/);
  assert.match(source,/group.type==='multi_select'\?'checkbox':'radio'/);
 });
 test('shared dropdown includes accessible keyboard controls and focus return',()=>{
