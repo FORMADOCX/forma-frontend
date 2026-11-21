@@ -292,3 +292,8 @@ Checks here: `npm test` 28/28 passed, `npm run check:structure` passed. `npm run
 - Category and CMS navigation remains available through the existing localized footer; desktop header CMS links unchanged. This is a deliberate mobile discoverability tradeoff.
 - Selected bottom navigation item now has solid forest-green `var(--accent)` background with white text/icons, replacing the underline. `aria-current=page` and focus affordances remain.
 - No backend, SEO, routing or publishing changes. Browser QA remains outstanding until verified on devices.
+
+## Catalog search UI simplification (2026-11-21)
+- Removed visible `q` search input from `/templates` and `/categories/[slug]` catalog controls. `/search`, site header search and homepage hero search remain functional.
+- A pre-existing `q` query parameter is carried as a hidden GET input on non-search catalog pages to preserve URL-filter/pagination semantics without showing a duplicate search field.
+- Added a desktop three-column layout for catalog controls without search; mobile and tablet use existing responsive layout. No API/SEO changes.

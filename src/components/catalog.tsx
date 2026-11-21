@@ -28,8 +28,8 @@ export async function Catalog({locale,query={},search=false,fixedCategory,embedd
  return <div className={`container page-content${fixedCategory?' category-catalog':''}`}>
   {search&&!embedded&&<Breadcrumbs locale={locale} items={searchBreadcrumbs(locale,params.q)}/>}
   {!embedded&&<PageIntro title={heading} description={!fixedCategory&&!search?t.catalogDescription:undefined}/>}
-  <form className="catalog-controls" method="get" action={base} role="search">
-   <label>{t.search}<input type="search" name="q" maxLength={120} defaultValue={params.q} placeholder={t.searchPlaceholder}/></label>
+  <form className={`catalog-controls${search?'':' catalog-controls-no-search'}`} method="get" action={base} role={search?'search':undefined}>
+   {search?<label>{t.search}<input type="search" name="q" maxLength={120} defaultValue={params.q} placeholder={t.searchPlaceholder}/></label>:params.q?<input type="hidden" name="q" value={params.q}/>:null}
    {!fixedCategory&&<div className="catalog-control"><span>{t.categories}</span><FormaSelect name="category" label={t.categories} defaultValue={params.category} options={[{value:'',label:locale==='uk'?'Усі категорії':'All categories'},...categories.map(c=>({value:c.slug,label:c.name}))]}/></div>}
    <div className="catalog-control"><span>{locale==='uk'?'Сортування':'Sort by'}</span><FormaSelect name="sort" label={locale==='uk'?'Сортування':'Sort by'} defaultValue={params.sort} options={[{value:'newest',label:locale==='uk'?'Спочатку нові':'Newest'},{value:'oldest',label:locale==='uk'?'Спочатку старі':'Oldest'},{value:'title',label:'Title A–Z'},{value:'-title',label:'Title Z–A'}]}/></div>
    {params.page_size!==20&&<input type="hidden" name="page_size" value={params.page_size}/>}

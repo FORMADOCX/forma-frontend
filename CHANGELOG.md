@@ -230,3 +230,8 @@ Historical release notes below describe earlier implementations; **the current v
 - Current staging URLs and SEO noindex preserved.
 
 - Mobile UX release version: v0.8.7 (based on v0.8.6 plus category/search breadcrumbs fixes).
+
+## 0.8.7 — Catalog search UI simplification (2026-11-21)
+- Removed redundant search fields from All Templates and Category Detail listings; the dedicated Search page and global/hero search stay unchanged.
+- Preserved incoming `q` values for existing filter URLs through hidden form state, without changing Django API requests.
+- Adjusted catalog control grid and added regression tests; no design changes outside the catalog control row.

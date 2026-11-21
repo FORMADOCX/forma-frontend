@@ -510,3 +510,6 @@ button:disabled{cursor:not-allowed;opacity:.5}
 }
 @media(min-width:768px){.mobile-bottom-navigation{display:none!important}}
 @media(prefers-reduced-motion:reduce){.mobile-bottom-navigation>a{transition:none}}
+
+/* Catalog/category controls contain no search field; search remains on /search. */
+@media(min-width:769px){.catalog-controls-no-search{grid-template-columns:minmax(180px,1fr) minmax(180px,1fr) auto}}
